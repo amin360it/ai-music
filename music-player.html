@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Aminur670 | AI Music</title>
+<script src="vendor/tailwind.js"></script>
+<script>(function(){var m=window.matchMedia('(prefers-color-scheme:light)');if(m.matches)document.documentElement.setAttribute('data-s','light');m.addEventListener('change',function(e){if(!document.getElementById('app')?.__vue_app__)document.documentElement.toggleAttribute('data-s',e.matches)});})();</script>
+<script src="vendor/vue3.js"></script>
+<script src="vendor/pouchdb.js"></script>
+<link rel="stylesheet" href="vendor/fonts/material-icons.css" />
+<link rel="stylesheet" href="vendor/fonts/inter.css" />
+<style>
+@font-face{font-family:"Noto Sans Bengali";font-style:normal;font-weight:400;font-display:swap;src:local("Siyam Rupali"),url("vendor/fonts/siyam-rupali.woff2") format("woff2"),url("vendor/fonts/siyam-rupali.ttf") format("truetype");}
+@font-face{font-family:"Noto Sans Bengali";font-style:normal;font-weight:600;font-display:swap;src:local("Siyam Rupali"),url("vendor/fonts/siyam-rupali.woff2") format("woff2");}
+@font-face{font-family:"Noto Sans Bengali";font-style:normal;font-weight:700;font-display:swap;src:local("Siyam Rupali"),url("vendor/fonts/siyam-rupali.woff2") format("woff2");}
+</style>
+<style>
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-thumb{background:#334155;border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  [v-cloak]{display:none!important}
+  .mi{font-family:'Material Icons';font-size:1.25rem;line-height:1;vertical-align:middle;display:inline-block;font-variant:normal;text-transform:none;letter-spacing:normal;word-wrap:normal;direction:ltr;white-space:nowrap}
+  .mi-sm{font-size:1rem}
+  .mi-lg{font-size:1.5rem}
+  .rg{ -webkit-appearance:none;appearance:none;height:4px;border-radius:9999px;background:#334155;outline:none}
+  .rg::-webkit-slider-thumb{ -webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:#22d3ee;cursor:pointer;border:2px solid #0f172a}
+  .rg::-moz-range-thumb{width:14px;height:14px;border:none;border-radius:50%;background:#22d3ee;cursor:pointer}
+  .sp{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+  .gl{border:1px solid rgba(255,255,255,.05);box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06)}
+  .gl-2{box-shadow:0 4px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+  .eq{display:flex;align-items:flex-end;gap:2px;height:12px}
+  .eq span{width:3px;background:#22d3ee;border-radius:2px;animation:eq 0.6s ease-in-out infinite alternate}
+  .eq span:nth-child(1){height:6px;animation-delay:0s}
+  .eq span:nth-child(2){height:12px;animation-delay:0.2s}
+  .eq span:nth-child(3){height:8px;animation-delay:0.4s}
+  .eq span:nth-child(4){height:10px;animation-delay:0.1s}
+  .eq-lg{height:16px}.eq-lg span{border-radius:3px}.eq-lg span:nth-child(1){height:8px}.eq-lg span:nth-child(2){height:16px}.eq-lg span:nth-child(3){height:11px}.eq-lg span:nth-child(4){height:14px}
+  @keyframes eq{0%{transform:scaleY(0.3)}100%{transform:scaleY(1)}}
+  /* Light mode overrides */
+  [data-s="light"]{--s95:#f8fafc;--s90:#f1f5f9;--s80:#e2e8f0;--s70:#cbd5e1;--s60:#94a3b8;--s50:#64748b;--s40:#475569;--s30:#334155;--s20:#1e293b}
+  [data-s="light"] body{background:var(--s95)}
+  [data-s="light"] .bg-slate-950{background:var(--s95)}
+  [data-s="light"] .bg-slate-950\/90{background:rgba(248,250,252,.9)}
+  [data-s="light"] .bg-slate-950\/95{background:rgba(248,250,252,.95)}
+  [data-s="light"] .bg-slate-900{background:var(--s90)}
+  [data-s="light"] .bg-slate-900\/40{background:rgba(241,245,249,.4)}
+  [data-s="light"] .bg-slate-900\/50{background:rgba(241,245,249,.5)}
+  [data-s="light"] .bg-slate-900\/95{background:rgba(241,245,249,.95)}
+  [data-s="light"] .bg-slate-800{background:var(--s80)}
+  [data-s="light"] .bg-slate-800\/50{background:rgba(226,232,240,.5)}
+  [data-s="light"] .bg-slate-800\/60{background:rgba(226,232,240,.6)}
+  [data-s="light"] .bg-slate-800\/70{background:rgba(226,232,240,.7)}
+  [data-s="light"] .bg-slate-800\/30{background:rgba(226,232,240,.3)}
+  [data-s="light"] .text-slate-200{color:var(--s20)}
+  [data-s="light"] .text-slate-300{color:var(--s30)}
+  [data-s="light"] .text-slate-400{color:var(--s40)}
+  [data-s="light"] .text-slate-500{color:var(--s50)}
+  [data-s="light"] .text-slate-600{color:var(--s60)}
+  [data-s="light"] .border-slate-800{border-color:var(--s70)}[data-s="light"] .border-slate-800\/60{border-color:rgba(203,213,225,.6)}
+  [data-s="light"] .border-slate-800\/80{border-color:rgba(203,213,225,.8)}
+  [data-s="light"] .border-slate-700{border-color:var(--s60)}
+  [data-s="light"] .border-slate-700\/60{border-color:rgba(148,163,184,.6)}
+  [data-s="light"] .border-slate-800\/30{border-color:rgba(203,213,225,.3)}
+  [data-s="light"] .border-slate-800\/70{border-color:rgba(203,213,225,.7)}
+  [data-s="light"] .border-slate-700\/40{border-color:rgba(148,163,184,.4)}
+  [data-s="light"] .text-cyan-300{color:#0e7490}
+  [data-s="light"] .text-cyan-400{color:#0891b2}
+  [data-s="light"] .text-rose-400{color:#e11d48}
+  [data-s="light"] .text-amber-400\/70{color:rgba(217,119,6,.7)}
+  [data-s="light"] .text-indigo-300{color:#4338ca}
+  [data-s="light"] .bg-cyan-500\/10{background:rgba(6,182,212,.1)}
+  [data-s="light"] .bg-cyan-500\/20{background:rgba(6,182,212,.2)}
+  [data-s="light"] .bg-cyan-500\/8{background:rgba(6,182,212,.08)}
+  [data-s="light"] .bg-indigo-500\/20{background:rgba(99,102,241,.15)}
+  [data-s="light"] .bg-rose-500\/20{background:rgba(244,63,94,.15)}
+  [data-s="light"] .rg{background:#cbd5e1}
+  [data-s="light"] .rg::-webkit-slider-thumb{border-color:#fff}
+  [data-s="light"] .rg::-moz-range-thumb{border-color:#fff}
+  @media(prefers-color-scheme:light){[data-s="light"] .gl{border-color:rgba(0,0,0,.07);box-shadow:0 2px 16px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6)}[data-s="light"] .gl-2{box-shadow:0 2px 16px rgba(0,0,0,.1)}}
+  body{font-family:'Inter','Noto Sans Bengali',system-ui,sans-serif}
+
+  .bg-shift{background:linear-gradient(135deg,#0b1120,#1a1a3e,#0f1b2d,#1a1a3e);background-size:300% 300%;animation:bgShift 25s ease infinite}
+  @keyframes bgShift{0%{background-position:0% 0%}25%{background-position:100% 0%}50%{background-position:100% 100%}75%{background-position:0% 100%}100%{background-position:0% 0%}}
+  [data-s="light"] .bg-shift{background:linear-gradient(135deg,#f1f5f9,#e0f2fe,#f8fafc,#e0f2fe)}
+  .sb-item{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;font-size:.875rem;padding:.5rem .75rem;border-radius:.5rem;transition:all .15s}
+  .th-spin{animation:thSpin 8s linear infinite}@keyframes thSpin{to{transform:rotate(360deg)}}
+  .float-disc{animation:floatDisc 3s ease-in-out infinite}@keyframes floatDisc{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .disc{position:relative;overflow:hidden}.disc::before{content:'';position:absolute;inset:10%;border-radius:50%;border:2px solid rgba(255,255,255,.07)}.disc::after{content:'';position:absolute;inset:18%;border-radius:50%;border:1px solid rgba(255,255,255,.04);box-shadow:0 0 0 3px rgba(0,0,0,.2)}
+  .toast-in{animation:toastIn .35s cubic-bezier(.22,1,.36,1) forwards}
+  @keyframes toastIn{0%{opacity:0;transform:translate(-50%,1.5rem)}100%{opacity:1;transform:translate(-50%,0)}}
+  .modal-in{animation:modalIn .2s ease}@keyframes modalIn{0%{opacity:0;transform:scale(.93)}100%{opacity:1;transform:scale(1)}}
+  .sk{width:16px;height:16px;border:2px solid;border-color:#22d3ee transparent #22d3ee transparent;border-radius:50%;animation:sp .7s linear infinite;display:inline-block;vertical-align:middle}
+  .pp{transition:box-shadow .3s}.pp:hover{box-shadow:0 0 20px rgba(34,211,238,.35)}.pp.is-pg{box-shadow:0 0 16px rgba(34,211,238,.25)}
+  .z-dropdown{z-index:60}
+  .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+  .sb-scroll{overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.2) transparent;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+  .sb-scroll::-webkit-scrollbar{width:4px}
+  .sb-scroll::-webkit-scrollbar-thumb{background:rgba(148,163,184,.2);border-radius:4px}
+  .sb-scroll::-webkit-scrollbar-thumb:hover{background:rgba(148,163,184,.4)}
+  .sb-scroll::-webkit-scrollbar-track{background:transparent}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>window.__EMBEDDED_SONGS__ = [{"id":"Songs/Ami Tomar Ke (Dark Electropop Remix).mp3::10545270","name":"Ami Tomar Ke (Dark Electropop Remix)","url":"./Songs/Ami Tomar Ke (Dark Electropop Remix).mp3"},{"id":"Songs/Ami Tomar Ke - New Dark Mix.mp3::10172238","name":"Ami Tomar Ke - New Dark Mix","url":"./Songs/Ami Tomar Ke - New Dark Mix.mp3"},{"id":"Songs/Every Pixel of Heart Still Carries You (Korean OST).mp3::7735638","name":"Every Pixel of Heart Still Carries You (Korean OST)","url":"./Songs/Every Pixel of Heart Still Carries You (Korean OST).mp3"},{"id":"Songs/Extreme-Loud.mp3::1161449","name":"Extreme-Loud","url":"./Songs/Extreme-Loud.mp3"},{"id":"Songs/gemini_music.mp3::4234150","name":"gemini_music","url":"./Songs/gemini_music.mp3"},{"id":"Songs/Guitar-Loud-Tone.mp3::661269","name":"Guitar-Loud-Tone","url":"./Songs/Guitar-Loud-Tone.mp3"},{"id":"Songs/If I Hadn't Fallen in Love With You..v1.1.mp3::7199406","name":"If I Hadn't Fallen in Love With You..v1.1","url":"./Songs/If I Hadn't Fallen in Love With You..v1.1.mp3"},{"id":"Songs/If I Hadn't Fallen in Love With You..v1.mp3::9529830","name":"If I Hadn't Fallen in Love With You..v1","url":"./Songs/If I Hadn't Fallen in Love With You..v1.mp3"},{"id":"Songs/If I Hadn't Fallen in Love With You..v2.1.mp3::8037510","name":"If I Hadn't Fallen in Love With You..v2.1","url":"./Songs/If I Hadn't Fallen in Love With You..v2.1.mp3"},{"id":"Songs/If I Hadn't Fallen in Love With You..v2.mp3::8856462","name":"If I Hadn't Fallen in Love With You..v2","url":"./Songs/If I Hadn't Fallen in Love With You..v2.mp3"},{"id":"Songs/If I'd never fallen for you, tell me...v6.1.mp3::11201046","name":"If I'd never fallen for you, tell me...v6.1","url":"./Songs/If I'd never fallen for you, tell me...v6.1.mp3"},{"id":"Songs/If I'd never fallen for you, tell me...v6.mp3::11289702","name":"If I'd never fallen for you, tell me...v6","url":"./Songs/If I'd never fallen for you, tell me...v6.mp3"},{"id":"Songs/Just go, Leave me behind...  - Bw-Pop v6.mp3::11342478","name":"Just go, Leave me behind...  - Bw-Pop v6","url":"./Songs/Just go, Leave me behind...  - Bw-Pop v6.mp3"},{"id":"Songs/Just go, Leave me behind...  - Bw-Pop.mp3::11504046","name":"Just go, Leave me behind...  - Bw-Pop","url":"./Songs/Just go, Leave me behind...  - Bw-Pop.mp3"},{"id":"Songs/Loud-Birds.mp3::1200077","name":"Loud-Birds","url":"./Songs/Loud-Birds.mp3"},{"id":"Songs/Loud-Music-New--2024.mp3::707825","name":"Loud-Music-New--2024","url":"./Songs/Loud-Music-New--2024.mp3"},{"id":"Songs/Loud.mp3::625877","name":"Loud","url":"./Songs/Loud.mp3"},{"id":"Songs/new_loud_ringtone.mp3::443916","name":"new_loud_ringtone","url":"./Songs/new_loud_ringtone.mp3"},{"id":"Songs/Pixel of You (Indigo Future Mix).mp3::7144374","name":"Pixel of You (Indigo Future Mix)","url":"./Songs/Pixel of You (Indigo Future Mix).mp3"},{"id":"Songs/Pixel of you (Remix).mp3::8301702","name":"Pixel of you (Remix)","url":"./Songs/Pixel of you (Remix).mp3"},{"id":"Songs/Rang Mere Khushiyon Ka (Love Version -Female ).mp3::7636038","name":"Rang Mere Khushiyon Ka (Love Version -Female )","url":"./Songs/Rang Mere Khushiyon Ka (Love Version -Female ).mp3"},{"id":"Songs/Rang Mere Khushiyon Ka -  Boly-pop, Female version_(Female Version).mp3::11438526","name":"Rang Mere Khushiyon Ka -  Boly-pop, Female version_(Female Version)","url":"./Songs/Rang Mere Khushiyon Ka -  Boly-pop, Female version_(Female Version).mp3"},{"id":"Songs/Rang Mere Khushiyon Ka - Female Version_(Female Version).mp3::11350758","name":"Rang Mere Khushiyon Ka - Female Version_(Female Version)","url":"./Songs/Rang Mere Khushiyon Ka - Female Version_(Female Version).mp3"},{"id":"Songs/Rang Mere Khushiyon Ka - Female, Boly-pop_(Female Version).mp3::10211046","name":"Rang Mere Khushiyon Ka - Female, Boly-pop_(Female Version)","url":"./Songs/Rang Mere Khushiyon Ka - Female, Boly-pop_(Female Version).mp3"},{"id":"Songs/Remembered (기억할게).mp3::9251478","name":"Remembered (기억할게)","url":"./Songs/Remembered (기억할게).mp3"},{"id":"Songs/Remembered (기억할게)— Korean OST Style (Female Version).mp3::9332430","name":"Remembered (기억할게)— Korean OST Style (Female Version)","url":"./Songs/Remembered (기억할게)— Korean OST Style (Female Version).mp3"},{"id":"Songs/Saiyaraa (Fan Remake) .mp3::5814006","name":"Saiyaraa (Fan Remake) ","url":"./Songs/Saiyaraa (Fan Remake) .mp3"},{"id":"Songs/Teri Yado Mei.mp3::7099806","name":"Teri Yado Mei","url":"./Songs/Teri Yado Mei.mp3"},{"id":"Songs/You found me babe.mp3::7341654","name":"You found me babe","url":"./Songs/You found me babe.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v2.4.mp3::6707382","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v2.4","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v2.4.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v2.mp3::7707126","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v2","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v2.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v3.1.mp3::7680054","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v3.1","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v3.1.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v3.mp3::8261166","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v3","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v3.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v4.1.mp3::6862974","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v4.1","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v4.1.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v4.mp3::7612950","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v4","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v4.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v5.1.mp3::8582478","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v5.1","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v5.1.mp3"},{"id":"Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v5.mp3::10821006","name":"तुम्हारे इश्क़ में न पड़ता तो शायद...   v5","url":"./Songs/तुम्हारे इश्क़ में न पड़ता तो शायद...   v5.mp3"},{"id":"Songs/অপ্রকাশিত রহস্য .mp3::6935574","name":"অপ্রকাশিত রহস্য ","url":"./Songs/অপ্রকাশিত রহস্য .mp3"},{"id":"Songs/অপ্রকাশিত রহস্য v1.mp3::8128038","name":"অপ্রকাশিত রহস্য v1","url":"./Songs/অপ্রকাশিত রহস্য v1.mp3"},{"id":"Songs/অসমাপ্ত আত্মজীবনী v2.1.mp3::8719782","name":"অসমাপ্ত আত্মজীবনী v2.1","url":"./Songs/অসমাপ্ত আত্মজীবনী v2.1.mp3"},{"id":"Songs/অসমাপ্ত আত্মজীবনী v2.mp3::7857774","name":"অসমাপ্ত আত্মজীবনী v2","url":"./Songs/অসমাপ্ত আত্মজীবনী v2.mp3"},{"id":"Songs/অসমাপ্ত আত্মজীবনী v3.1.mp3::7516686","name":"অসমাপ্ত আত্মজীবনী v3.1","url":"./Songs/অসমাপ্ত আত্মজীবনী v3.1.mp3"},{"id":"Songs/অসমাপ্ত আত্মজীবনী v3.mp3::7522134","name":"অসমাপ্ত আত্মজীবনী v3","url":"./Songs/অসমাপ্ত আত্মজীবনী v3.mp3"},{"id":"Songs/অসমাপ্ত আত্মজীবনী v4.1.mp3::7261974","name":"অসমাপ্ত আত্মজীবনী v4.1","url":"./Songs/অসমাপ্ত আত্মজীবনী v4.1.mp3"},{"id":"Songs/অসমাপ্ত আত্মজীবনী v4.mp3::6608838","name":"অসমাপ্ত আত্মজীবনী v4","url":"./Songs/অসমাপ্ত আত্মজীবনী v4.mp3"},{"id":"Songs/অসমাপ্ত আত্মজীবনী v5 রবীন্দ্র .mp3::8106198","name":"অসমাপ্ত আত্মজীবনী v5 রবীন্দ্র ","url":"./Songs/অসমাপ্ত আত্মজীবনী v5 রবীন্দ্র .mp3"},{"id":"Songs/আমি তোমার কে! (Male,Rock) v2.mp3::10189422","name":"আমি তোমার কে! (Male,Rock) v2","url":"./Songs/আমি তোমার কে! (Male,Rock) v2.mp3"},{"id":"Songs/আমি তোমার কে! (Male,Rock) v4.mp3::11212614","name":"আমি তোমার কে! (Male,Rock) v4","url":"./Songs/আমি তোমার কে! (Male,Rock) v4.mp3"},{"id":"Songs/আমি তোমার কে! (Male,Rock).mp3::11212614","name":"আমি তোমার কে! (Male,Rock)","url":"./Songs/আমি তোমার কে! (Male,Rock).mp3"},{"id":"Songs/আমি তোমার কে! v3 😑.mp3::9994614","name":"আমি তোমার কে! v3 😑","url":"./Songs/আমি তোমার কে! v3 😑.mp3"},{"id":"Songs/আমি তোমার কে! v4 😑.mp3::10485558","name":"আমি তোমার কে! v4 😑","url":"./Songs/আমি তোমার কে! v4 😑.mp3"},{"id":"Songs/আমি তোমার কে! 😅🥲.mp3::10278510","name":"আমি তোমার কে! 😅🥲","url":"./Songs/আমি তোমার কে! 😅🥲.mp3"},{"id":"Songs/আমি তোমার কে! 😅🥲v2.mp3::7973382","name":"আমি তোমার কে! 😅🥲v2","url":"./Songs/আমি তোমার কে! 😅🥲v2.mp3"},{"id":"Songs/কথা ছিলো... (Cosmic Heartbreak Mutation Mix).mp3::9903054","name":"কথা ছিলো... (Cosmic Heartbreak Mutation Mix)","url":"./Songs/কথা ছিলো... (Cosmic Heartbreak Mutation Mix).mp3"},{"id":"Songs/কথা ছিলো... v1.mp3::8083542","name":"কথা ছিলো... v1","url":"./Songs/কথা ছিলো... v1.mp3"},{"id":"Songs/কথা ছিলো....blazing rock.mp3::10920414","name":"কথা ছিলো....blazing rock","url":"./Songs/কথা ছিলো....blazing rock.mp3"},{"id":"Songs/কথা ছিলো....mp3::10978110","name":"কথা ছিলো...","url":"./Songs/কথা ছিলো....mp3"},{"id":"Songs/কথা ছিলো...pop rock.mp3::11299518","name":"কথা ছিলো...pop rock","url":"./Songs/কথা ছিলো...pop rock.mp3"},{"id":"Songs/খিচুড়ির সুখ 🥘.mp3::10181142","name":"খিচুড়ির সুখ 🥘","url":"./Songs/খিচুড়ির সুখ 🥘.mp3"},{"id":"Songs/চমৎকার ছলনাময়, [Female, pop House] v1.mp3::7091766","name":"চমৎকার ছলনাময়, [Female, pop House] v1","url":"./Songs/চমৎকার ছলনাময়, [Female, pop House] v1.mp3"},{"id":"Songs/চমৎকার ছলনাময়, [Female, pop House] v4.mp3::6220518","name":"চমৎকার ছলনাময়, [Female, pop House] v4","url":"./Songs/চমৎকার ছলনাময়, [Female, pop House] v4.mp3"},{"id":"Songs/চমৎকার ছলনাময়, [Male, pop House].mp3::7210950","name":"চমৎকার ছলনাময়, [Male, pop House]","url":"./Songs/চমৎকার ছলনাময়, [Male, pop House].mp3"},{"id":"Songs/চমৎকার ছিলো .mp3::5835126","name":"চমৎকার ছিলো ","url":"./Songs/চমৎকার ছিলো .mp3"},{"id":"Songs/চমৎকার ছিলো v3.mp3::5389158","name":"চমৎকার ছিলো v3","url":"./Songs/চমৎকার ছিলো v3.mp3"},{"id":"Songs/তবে, আমি তোমার কে (Futuristic Dreamwave Remix) v1.mp3::7292214","name":"তবে, আমি তোমার কে (Futuristic Dreamwave Remix) v1","url":"./Songs/তবে, আমি তোমার কে (Futuristic Dreamwave Remix) v1.mp3"},{"id":"Songs/তবে, আমি তোমার কে (Futuristic Dreamwave Remix).mp3::7773366","name":"তবে, আমি তোমার কে (Futuristic Dreamwave Remix)","url":"./Songs/তবে, আমি তোমার কে (Futuristic Dreamwave Remix).mp3"},{"id":"Songs/তবে, আমি তোমার কে... new v2.1 (2).mp3::8400126","name":"তবে, আমি তোমার কে... new v2.1 (2)","url":"./Songs/তবে, আমি তোমার কে... new v2.1 (2).mp3"},{"id":"Songs/তবে, আমি তোমার কে... new v2.mp3::8400126","name":"তবে, আমি তোমার কে... new v2","url":"./Songs/তবে, আমি তোমার কে... new v2.mp3"},{"id":"Songs/তবে, আমি তোমার কে... pop rock.mp3::6695982","name":"তবে, আমি তোমার কে... pop rock","url":"./Songs/তবে, আমি তোমার কে... pop rock.mp3"},{"id":"Songs/তবে, আমি তোমার কে....mp3::10199526","name":"তবে, আমি তোমার কে...","url":"./Songs/তবে, আমি তোমার কে....mp3"},{"id":"Songs/তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix) v4.mp3::11433270","name":"তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix) v4","url":"./Songs/তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix) v4.mp3"},{"id":"Songs/তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix) v7.mp3::9460470","name":"তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix) v7","url":"./Songs/তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix) v7.mp3"},{"id":"Songs/তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix).mp3::11436750","name":"তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix)","url":"./Songs/তুমি অন্য কারো ছিলে - Remake Dark Bw-pop (Remix).mp3"},{"id":"Songs/তুমি আছো বলেই 🥰 (Epic Pop-Rock) v2.mp3::6571398","name":"তুমি আছো বলেই 🥰 (Epic Pop-Rock) v2","url":"./Songs/তুমি আছো বলেই 🥰 (Epic Pop-Rock) v2.mp3"},{"id":"Songs/তুমি আছো বলেই 🥰 (Epic Pop-Rock).mp3::6634278","name":"তুমি আছো বলেই 🥰 (Epic Pop-Rock)","url":"./Songs/তুমি আছো বলেই 🥰 (Epic Pop-Rock).mp3"},{"id":"Songs/তুমি আছো বলেই 🥰 Male (Epic Pop-Rock) v1.mp3::7071798","name":"তুমি আছো বলেই 🥰 Male (Epic Pop-Rock) v1","url":"./Songs/তুমি আছো বলেই 🥰 Male (Epic Pop-Rock) v1.mp3"},{"id":"Songs/তুমি আছো বলেই 🥰 Male (Epic Pop-Rock).mp3::8501094","name":"তুমি আছো বলেই 🥰 Male (Epic Pop-Rock)","url":"./Songs/তুমি আছো বলেই 🥰 Male (Epic Pop-Rock).mp3"},{"id":"Songs/তুমি আমার কাছে যেমন (Indie Pop Rock Remix) (1).mp3::8541270","name":"তুমি আমার কাছে যেমন (Indie Pop Rock Remix) (1)","url":"./Songs/তুমি আমার কাছে যেমন (Indie Pop Rock Remix) (1).mp3"},{"id":"Songs/তুমি আমার কাছে যেমন (Indie Pop Rock Remix) v1.mp3::8549934","name":"তুমি আমার কাছে যেমন (Indie Pop Rock Remix) v1","url":"./Songs/তুমি আমার কাছে যেমন (Indie Pop Rock Remix) v1.mp3"},{"id":"Songs/তুমি আমার কাছে যেমন (Indie Pop Rock Remix).mp3::8669502","name":"তুমি আমার কাছে যেমন (Indie Pop Rock Remix)","url":"./Songs/তুমি আমার কাছে যেমন (Indie Pop Rock Remix).mp3"},{"id":"Songs/তুমি দুঃখ হও - (Ethereal) v1.mp3::7972758","name":"তুমি দুঃখ হও - (Ethereal) v1","url":"./Songs/তুমি দুঃখ হও - (Ethereal) v1.mp3"},{"id":"Songs/তুমি দুঃখ হও - (Ethereal).mp3::7182678","name":"তুমি দুঃখ হও - (Ethereal)","url":"./Songs/তুমি দুঃখ হও - (Ethereal).mp3"},{"id":"Songs/তুমি দুঃখ হও - Blazing Pop Rock v1.mp3::8228742","name":"তুমি দুঃখ হও - Blazing Pop Rock v1","url":"./Songs/তুমি দুঃখ হও - Blazing Pop Rock v1.mp3"},{"id":"Songs/তুমি দুঃখ হও - Blazing Pop Rock.mp3::7986702","name":"তুমি দুঃখ হও - Blazing Pop Rock","url":"./Songs/তুমি দুঃখ হও - Blazing Pop Rock.mp3"},{"id":"Songs/তুমি দুঃখ হও - Cosmic Fusion Anthem.mp3::7710078","name":"তুমি দুঃখ হও - Cosmic Fusion Anthem","url":"./Songs/তুমি দুঃখ হও - Cosmic Fusion Anthem.mp3"},{"id":"Songs/তুমি দুঃখ হও - Dark Anthem v1.mp3::7286286","name":"তুমি দুঃখ হও - Dark Anthem v1","url":"./Songs/তুমি দুঃখ হও - Dark Anthem v1.mp3"},{"id":"Songs/তুমি দুঃখ হও - Dark Anthem.mp3::7636518","name":"তুমি দুঃখ হও - Dark Anthem","url":"./Songs/তুমি দুঃখ হও - Dark Anthem.mp3"},{"id":"Songs/তুমি দুঃখ হও - Dark Pop Mix v1.mp3::8127918","name":"তুমি দুঃখ হও - Dark Pop Mix v1","url":"./Songs/তুমি দুঃখ হও - Dark Pop Mix v1.mp3"},{"id":"Songs/তুমি দুঃখ হও - Dark Pop Mix.mp3::8200278","name":"তুমি দুঃখ হও - Dark Pop Mix","url":"./Songs/তুমি দুঃখ হও - Dark Pop Mix.mp3"},{"id":"Songs/তুমি দুঃখ হও - Folk-Pop .mp3::7791318","name":"তুমি দুঃখ হও - Folk-Pop ","url":"./Songs/তুমি দুঃখ হও - Folk-Pop .mp3"},{"id":"Songs/তুমি দুঃখ হও - Folk-Pop v1.mp3::6966630","name":"তুমি দুঃখ হও - Folk-Pop v1","url":"./Songs/তুমি দুঃখ হও - Folk-Pop v1.mp3"},{"id":"Songs/তুমি দুঃখ হও - Male Rock v1.mp3::7646814","name":"তুমি দুঃখ হও - Male Rock v1","url":"./Songs/তুমি দুঃখ হও - Male Rock v1.mp3"},{"id":"Songs/তুমি দুঃখ হও - Male Rock.mp3::7773390","name":"তুমি দুঃখ হও - Male Rock","url":"./Songs/তুমি দুঃখ হও - Male Rock.mp3"},{"id":"Songs/তুমি দুঃখ হও - Pop Rock v1.mp3::8712822","name":"তুমি দুঃখ হও - Pop Rock v1","url":"./Songs/তুমি দুঃখ হও - Pop Rock v1.mp3"},{"id":"Songs/তুমি দুঃখ হও - Pop Rock.mp3::8404422","name":"তুমি দুঃখ হও - Pop Rock","url":"./Songs/তুমি দুঃখ হও - Pop Rock.mp3"},{"id":"Songs/তুমি দুঃখ হও v1.mp3::7204110","name":"তুমি দুঃখ হও v1","url":"./Songs/তুমি দুঃখ হও v1.mp3"},{"id":"Songs/তুমি দুঃখ হও- Robindro v3.mp3::7755174","name":"তুমি দুঃখ হও- Robindro v3","url":"./Songs/তুমি দুঃখ হও- Robindro v3.mp3"},{"id":"Songs/তুমি দুঃখ হও- Robindro.mp3::8777838","name":"তুমি দুঃখ হও- Robindro","url":"./Songs/তুমি দুঃখ হও- Robindro.mp3"},{"id":"Songs/তুমি দুঃখ হও.mp3::9090438","name":"তুমি দুঃখ হও","url":"./Songs/তুমি দুঃখ হও.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও - Male Rock v1.mp3::8442150","name":"তোমায় দেখেছি কোথাও - Male Rock v1","url":"./Songs/তোমায় দেখেছি কোথাও - Male Rock v1.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও - Male Rock.mp3::8302206","name":"তোমায় দেখেছি কোথাও - Male Rock","url":"./Songs/তোমায় দেখেছি কোথাও - Male Rock.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও - Male Version v2.mp3::8814774","name":"তোমায় দেখেছি কোথাও - Male Version v2","url":"./Songs/তোমায় দেখেছি কোথাও - Male Version v2.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও - Male Version.mp3::8097558","name":"তোমায় দেখেছি কোথাও - Male Version","url":"./Songs/তোমায় দেখেছি কোথাও - Male Version.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও - Modern Ballad v1.mp3::8397942","name":"তোমায় দেখেছি কোথাও - Modern Ballad v1","url":"./Songs/তোমায় দেখেছি কোথাও - Modern Ballad v1.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও - Modern Ballad.mp3::7935030","name":"তোমায় দেখেছি কোথাও - Modern Ballad","url":"./Songs/তোমায় দেখেছি কোথাও - Modern Ballad.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও v1.mp3::8553798","name":"তোমায় দেখেছি কোথাও v1","url":"./Songs/তোমায় দেখেছি কোথাও v1.mp3"},{"id":"Songs/তোমায় দেখেছি কোথাও.mp3::7683750","name":"তোমায় দেখেছি কোথাও","url":"./Songs/তোমায় দেখেছি কোথাও.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো (Ethereal Progressive Soul Remix).mp3::10227462","name":"তোমার প্রেমে না পড়লে হয়তো (Ethereal Progressive Soul Remix)","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো (Ethereal Progressive Soul Remix).mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো (Infinite Fusion Mix) v1.mp3::10073766","name":"তোমার প্রেমে না পড়লে হয়তো (Infinite Fusion Mix) v1","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো (Infinite Fusion Mix) v1.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো (Infinite Fusion Mix).mp3::9905622","name":"তোমার প্রেমে না পড়লে হয়তো (Infinite Fusion Mix)","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো (Infinite Fusion Mix).mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v1.mp3::11330454","name":"তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v1","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v1.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v2.mp3::11523654","name":"তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v2","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v2.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v4.mp3::11289462","name":"তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v4","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop v4.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop.mp3::11154150","name":"তোমার প্রেমে না পড়লে হয়তো - Bazing Pop","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো - Bazing Pop.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো...v5.1.mp3::8126454","name":"তোমার প্রেমে না পড়লে হয়তো...v5.1","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো...v5.1.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো...v5.mp3::8087958","name":"তোমার প্রেমে না পড়লে হয়তো...v5","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো...v5.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো...v6(James+Aiub Bacchu).mp3::9197382","name":"তোমার প্রেমে না পড়লে হয়তো...v6(James+Aiub Bacchu)","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো...v6(James+Aiub Bacchu).mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো - house.mp3::7152342","name":"তোমার প্রেমে না পড়লে হয়তো - house","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো - house.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো - Yanni Orchestra .mp3::5767254","name":"তোমার প্রেমে না পড়লে হয়তো - Yanni Orchestra ","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো - Yanni Orchestra .mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো - Yanni Orchestra v1.mp3::8255574","name":"তোমার প্রেমে না পড়লে হয়তো - Yanni Orchestra v1","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো - Yanni Orchestra v1.mp3"},{"id":"Songs/তোমার প্রেমে না পড়লে হয়তো...v7.mp3::11603478","name":"তোমার প্রেমে না পড়লে হয়তো...v7","url":"./Songs/তোমার প্রেমে না পড়লে হয়তো...v7.mp3"},{"id":"Songs/থেকে যাক ভালোবাসা  - BW-Pop v2.mp3::9412278","name":"থেকে যাক ভালোবাসা  - BW-Pop v2","url":"./Songs/থেকে যাক ভালোবাসা  - BW-Pop v2.mp3"},{"id":"Songs/থেকে যাক ভালোবাসা  - BW-Pop.mp3::8495934","name":"থেকে যাক ভালোবাসা  - BW-Pop","url":"./Songs/থেকে যাক ভালোবাসা  - BW-Pop.mp3"},{"id":"Songs/থেকে যাক ভালোবাসা  - Male Version v2.mp3::10581798","name":"থেকে যাক ভালোবাসা  - Male Version v2","url":"./Songs/থেকে যাক ভালোবাসা  - Male Version v2.mp3"},{"id":"Songs/থেকে যাক ভালোবাসা  - Male Version.mp3::9685638","name":"থেকে যাক ভালোবাসা  - Male Version","url":"./Songs/থেকে যাক ভালোবাসা  - Male Version.mp3"},{"id":"Songs/থেকে যাক ভালোবাসা  - Yanni Orchestra .mp3::9826134","name":"থেকে যাক ভালোবাসা  - Yanni Orchestra ","url":"./Songs/থেকে যাক ভালোবাসা  - Yanni Orchestra .mp3"},{"id":"Songs/থেকে যাক ভালোবাসা  - Yanni Orchestra v5.mp3::10041606","name":"থেকে যাক ভালোবাসা  - Yanni Orchestra v5","url":"./Songs/থেকে যাক ভালোবাসা  - Yanni Orchestra v5.mp3"},{"id":"Songs/থেকে যাক ভালোবাসা .mp3::7743702","name":"থেকে যাক ভালোবাসা ","url":"./Songs/থেকে যাক ভালোবাসা .mp3"},{"id":"Songs/থেকে যাক ভালোবাসা v1.mp3::8908374","name":"থেকে যাক ভালোবাসা v1","url":"./Songs/থেকে যাক ভালোবাসা v1.mp3"},{"id":"Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া) v1.mp3::5359614","name":"নিখোঁজ হবো একদিন...(নস্টালজিয়া) v1","url":"./Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া) v1.mp3"},{"id":"Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া).mp3::6232014","name":"নিখোঁজ হবো একদিন...(নস্টালজিয়া)","url":"./Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া).mp3"},{"id":"Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া)v2.1.mp3::7237974","name":"নিখোঁজ হবো একদিন...(নস্টালজিয়া)v2.1","url":"./Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া)v2.1.mp3"},{"id":"Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া)v2.mp3::6206358","name":"নিখোঁজ হবো একদিন...(নস্টালজিয়া)v2","url":"./Songs/নিখোঁজ হবো একদিন...(নস্টালজিয়া)v2.mp3"},{"id":"Songs/নিখোঁজ হবো একদিন....mp3::6050406","name":"নিখোঁজ হবো একদিন...","url":"./Songs/নিখোঁজ হবো একদিন....mp3"},{"id":"Songs/বেচে থাকুক ভালোবাসা v3.mp3::7720086","name":"বেচে থাকুক ভালোবাসা v3","url":"./Songs/বেচে থাকুক ভালোবাসা v3.mp3"},{"id":"Songs/বেচে থাকুক ভালোবাসা v4.1.mp3::8468838","name":"বেচে থাকুক ভালোবাসা v4.1","url":"./Songs/বেচে থাকুক ভালোবাসা v4.1.mp3"},{"id":"Songs/বেচে থাকুক ভালোবাসা v4.mp3::8768070","name":"বেচে থাকুক ভালোবাসা v4","url":"./Songs/বেচে থাকুক ভালোবাসা v4.mp3"},{"id":"Songs/বেচে থাকুক ভালোবাসা v4r (1).mp3::8468838","name":"বেচে থাকুক ভালোবাসা v4r (1)","url":"./Songs/বেচে থাকুক ভালোবাসা v4r (1).mp3"},{"id":"Songs/বেচে থাকুক ভালোবাসা v4r.mp3::8768070","name":"বেচে থাকুক ভালোবাসা v4r","url":"./Songs/বেচে থাকুক ভালোবাসা v4r.mp3"},{"id":"Songs/বেচে থাকুক ভালোবাসা.mp3::8531934","name":"বেচে থাকুক ভালোবাসা","url":"./Songs/বেচে থাকুক ভালোবাসা.mp3"},{"id":"Songs/বেচে থাকুক ভালোবাসাv3.mp3::7720086","name":"বেচে থাকুক ভালোবাসাv3","url":"./Songs/বেচে থাকুক ভালোবাসাv3.mp3"},{"id":"Songs/বেলা ফুরানোর আগে... (Pop-Rock).mp3::9791382","name":"বেলা ফুরানোর আগে... (Pop-Rock)","url":"./Songs/বেলা ফুরানোর আগে... (Pop-Rock).mp3"},{"id":"Songs/বেলা ফুরানোর আগে... 🥲😅🥰.mp3::9393318","name":"বেলা ফুরানোর আগে... 🥲😅🥰","url":"./Songs/বেলা ফুরানোর আগে... 🥲😅🥰.mp3"},{"id":"Songs/বেলা ফুরায়...(Female, Remake).mp3::10312422","name":"বেলা ফুরায়...(Female, Remake)","url":"./Songs/বেলা ফুরায়...(Female, Remake).mp3"},{"id":"Songs/মনে থাকবে তোমারে (Ethereal Trap Ballad Remix).mp3::10563510","name":"মনে থাকবে তোমারে (Ethereal Trap Ballad Remix)","url":"./Songs/মনে থাকবে তোমারে (Ethereal Trap Ballad Remix).mp3"},{"id":"Songs/মনে থাকবে তোমারে (Nostalgic).mp3::10797318","name":"মনে থাকবে তোমারে (Nostalgic)","url":"./Songs/মনে থাকবে তোমারে (Nostalgic).mp3"},{"id":"Songs/মনে থাকবে তোমারে V2 (1).mp3::10079598","name":"মনে থাকবে তোমারে V2 (1)","url":"./Songs/মনে থাকবে তোমারে V2 (1).mp3"},{"id":"Songs/মনে থাকবে তোমারে v2.1.mp3::10079598","name":"মনে থাকবে তোমারে v2.1","url":"./Songs/মনে থাকবে তোমারে v2.1.mp3"},{"id":"Songs/মনে থাকবে তোমারে V2.mp3::11353398","name":"মনে থাকবে তোমারে V2","url":"./Songs/মনে থাকবে তোমারে V2.mp3"},{"id":"Songs/মনে পড়ে কি সেই সোনালি বিকেল_ Optimised v2.mp3::7786182","name":"মনে পড়ে কি সেই সোনালি বিকেল_ Optimised v2","url":"./Songs/মনে পড়ে কি সেই সোনালি বিকেল_ Optimised v2.mp3"},{"id":"Songs/মনে পড়ে কি সেই সোনালি বিকেল_ Optimised.mp3::6816462","name":"মনে পড়ে কি সেই সোনালি বিকেল_ Optimised","url":"./Songs/মনে পড়ে কি সেই সোনালি বিকেল_ Optimised.mp3"},{"id":"Songs/মনে পড়ে কি সেই সোনালি বিকেল_! (Futuristic Indie Anthem Mix).mp3::10104966","name":"মনে পড়ে কি সেই সোনালি বিকেল_! (Futuristic Indie Anthem Mix)","url":"./Songs/মনে পড়ে কি সেই সোনালি বিকেল_! (Futuristic Indie Anthem Mix).mp3"},{"id":"Songs/মনে পড়ে কি সেই সোনালি বিকেল_! v3.1.mp3::9496806","name":"মনে পড়ে কি সেই সোনালি বিকেল_! v3.1","url":"./Songs/মনে পড়ে কি সেই সোনালি বিকেল_! v3.1.mp3"},{"id":"Songs/মনে পড়ে কি সেই সোনালি বিকেল_! v3.mp3::11475078","name":"মনে পড়ে কি সেই সোনালি বিকেল_! v3","url":"./Songs/মনে পড়ে কি সেই সোনালি বিকেল_! v3.mp3"},{"id":"Songs/মনে পড়ে কি সেই সোনালি বিকেল_! v4.mp3::9496806","name":"মনে পড়ে কি সেই সোনালি বিকেল_! v4","url":"./Songs/মনে পড়ে কি সেই সোনালি বিকেল_! v4.mp3"},{"id":"Songs/যাও তুমি আমায় ছেড়ে - Rabindro Modern v6.mp3::11457006","name":"যাও তুমি আমায় ছেড়ে - Rabindro Modern v6","url":"./Songs/যাও তুমি আমায় ছেড়ে - Rabindro Modern v6.mp3"},{"id":"Songs/যাও তুমি আমায় ছেড়ে - Rabindro Modern.mp3::11102598","name":"যাও তুমি আমায় ছেড়ে - Rabindro Modern","url":"./Songs/যাও তুমি আমায় ছেড়ে - Rabindro Modern.mp3"},{"id":"Songs/রবের পথে (2).mp3::5486982","name":"রবের পথে (2)","url":"./Songs/রবের পথে (2).mp3"},{"id":"Songs/রবের পথে v1.mp3::4390710","name":"রবের পথে v1","url":"./Songs/রবের পথে v1.mp3"},{"id":"Songs/রবের পথে v2.mp3::4807782","name":"রবের পথে v2","url":"./Songs/রবের পথে v2.mp3"},{"id":"Songs/রবের পথে.mp3::3799542","name":"রবের পথে","url":"./Songs/রবের পথে.mp3"},{"id":"Songs/শুধু তুমি চিনিলে না (Female Vocal, Modern  Mixed).mp3::10940886","name":"শুধু তুমি চিনিলে না (Female Vocal, Modern  Mixed)","url":"./Songs/শুধু তুমি চিনিলে না (Female Vocal, Modern  Mixed).mp3"},{"id":"Songs/শুধু তুমি চিনিলে না (Male Vocal, Mixed).mp3::9596094","name":"শুধু তুমি চিনিলে না (Male Vocal, Mixed)","url":"./Songs/শুধু তুমি চিনিলে না (Male Vocal, Mixed).mp3"},{"id":"Songs/শুধু তুমি চিনিলে না.mp3::11418990","name":"শুধু তুমি চিনিলে না","url":"./Songs/শুধু তুমি চিনিলে না.mp3"},{"id":"Songs/শেষ বিকেলের আলো  v2.mp3::9645798","name":"শেষ বিকেলের আলো  v2","url":"./Songs/শেষ বিকেলের আলো  v2.mp3"},{"id":"Songs/শেষ বিকেলের আলো (Cinematic Indie Ballad Version) 1.mp3::10617174","name":"শেষ বিকেলের আলো (Cinematic Indie Ballad Version) 1","url":"./Songs/শেষ বিকেলের আলো (Cinematic Indie Ballad Version) 1.mp3"},{"id":"Songs/শেষ বিকেলের আলো (Cinematic Indie Ballad Version).mp3::10060614","name":"শেষ বিকেলের আলো (Cinematic Indie Ballad Version)","url":"./Songs/শেষ বিকেলের আলো (Cinematic Indie Ballad Version).mp3"},{"id":"Songs/শেষ বিকেলের আলো (Rabindra) #1232.mp3::10331502","name":"শেষ বিকেলের আলো (Rabindra) #1232","url":"./Songs/শেষ বিকেলের আলো (Rabindra) #1232.mp3"},{"id":"Songs/শেষ বিকেলের আলো (Rabindra).mp3::10331502","name":"শেষ বিকেলের আলো (Rabindra)","url":"./Songs/শেষ বিকেলের আলো (Rabindra).mp3"},{"id":"Songs/শেষ বিকেলের আলো তুমি.mp3::9253590","name":"শেষ বিকেলের আলো তুমি","url":"./Songs/শেষ বিকেলের আলো তুমি.mp3"},{"id":"Songs/সবদিকে শুধু তুমি (Bangla Blue Rocker).mp3::7634406","name":"সবদিকে শুধু তুমি (Bangla Blue Rocker)","url":"./Songs/সবদিকে শুধু তুমি (Bangla Blue Rocker).mp3"},{"id":"Songs/হৃদয় সিন্দুক - Robindro style.mp3::10958766","name":"হৃদয় সিন্দুক - Robindro style","url":"./Songs/হৃদয় সিন্দুক - Robindro style.mp3"},{"id":"Songs/হৃদয়ের শেষ ঠিকানা .mp3::6973830","name":"হৃদয়ের শেষ ঠিকানা ","url":"./Songs/হৃদয়ের শেষ ঠিকানা .mp3"},{"id":"Songs/暮色未熄的愛.mp3::10451958","name":"暮色未熄的愛","url":"./Songs/暮色未熄的愛.mp3"},{"id":"Songs/🎵 খিচুড়ি, একমুঠো সুখ আর তোমার দেখা.mp3::8759862","name":"🎵 খিচুড়ি, একমুঠো সুখ আর তোমার দেখা","url":"./Songs/🎵 খিচুড়ি, একমুঠো সুখ আর তোমার দেখা.mp3"},{"id":"Songs/🎵 “Remembered (기억할게)” — Korean OST Style (Female Version).mp3::9365166","name":"🎵 “Remembered (기억할게)” — Korean OST Style (Female Version)","url":"./Songs/🎵 “Remembered (기억할게)” — Korean OST Style (Female Version).mp3"},{"id":"Songs/🥘 খিচুড়ি আর তুমি ❤️.mp3::9195198","name":"🥘 খিচুড়ি আর তুমি ❤️","url":"./Songs/🥘 খিচুড়ি আর তুমি ❤️.mp3"},{"id":"Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male v1.mp3::8973294","name":"🥰 তুমি আমার কাছে যেমন 🥰 v2 male v1","url":"./Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male v1.mp3"},{"id":"Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male v2.mp3::8597934","name":"🥰 তুমি আমার কাছে যেমন 🥰 v2 male v2","url":"./Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male v2.mp3"},{"id":"Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male v4.mp3::9384102","name":"🥰 তুমি আমার কাছে যেমন 🥰 v2 male v4","url":"./Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male v4.mp3"},{"id":"Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male.mp3::10236630","name":"🥰 তুমি আমার কাছে যেমন 🥰 v2 male","url":"./Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2 male.mp3"},{"id":"Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2.mp3::8599278","name":"🥰 তুমি আমার কাছে যেমন 🥰 v2","url":"./Songs/🥰 তুমি আমার কাছে যেমন 🥰 v2.mp3"},{"id":"Songs/🥰 তোমার প্রেমে না পড়লে হয়তো 🥰 Male Rock.mp3::11319078","name":"🥰 তোমার প্রেমে না পড়লে হয়তো 🥰 Male Rock","url":"./Songs/🥰 তোমার প্রেমে না পড়লে হয়তো 🥰 Male Rock.mp3"},{"id":"Songs/🥰 তোমার প্রেমে না পড়লে হয়তো 🥰 Poetry,  Male Rock.mp3::11335686","name":"🥰 তোমার প্রেমে না পড়লে হয়তো 🥰 Poetry,  Male Rock","url":"./Songs/🥰 তোমার প্রেমে না পড়লে হয়তো 🥰 Poetry,  Male Rock.mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 (2).mp3::9947718","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 (2)","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 (2).mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v1.mp3::9639654","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v1","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v1.mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v2.1.mp3::8208582","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v2.1","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v2.1.mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v2.2.mp3::8830110","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v2.2","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v2.2.mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v2.mp3::9947718","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v2","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v2.mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Duet version).mp3::10546278","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Duet version)","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Duet version).mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Female version) v1.mp3::9533142","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Female version) v1","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Female version) v1.mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Female version) v2.mp3::10055478","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Female version) v2","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v5 (Female version) v2.mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v6 (Female version).mp3::9434646","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v6 (Female version)","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v6 (Female version).mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v7 (Male, Blazing Rock).mp3::8851326","name":"🥰 হঠাৎ করেই তুমি এলে 🥰 v7 (Male, Blazing Rock)","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰 v7 (Male, Blazing Rock).mp3"},{"id":"Songs/🥰 হঠাৎ করেই তুমি এলে 🥰.mp3::10001958","name":"🥰 হঠাৎ করেই তুমি এলে 🥰","url":"./Songs/🥰 হঠাৎ করেই তুমি এলে 🥰.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v2.1.mp3::6921750","name":"🥰হঠাৎ করেই তুমি এলে🥰 v2.1","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v2.1.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v2.mp3::7586070","name":"🥰হঠাৎ করেই তুমি এলে🥰 v2","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v2.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v3 .mp3::9226110","name":"🥰হঠাৎ করেই তুমি এলে🥰 v3 ","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v3 .mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v3.mp3::6921750","name":"🥰হঠাৎ করেই তুমি এলে🥰 v3","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v3.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v4.1.mp3::9027654","name":"🥰হঠাৎ করেই তুমি এলে🥰 v4.1","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v4.1.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v4.2.mp3::9673230","name":"🥰হঠাৎ করেই তুমি এলে🥰 v4.2","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v4.2.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v4.mp3::9226110","name":"🥰হঠাৎ করেই তুমি এলে🥰 v4","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v4.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v5.mp3::9673230","name":"🥰হঠাৎ করেই তুমি এলে🥰 v5","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v5.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v6.mp3::9027654","name":"🥰হঠাৎ করেই তুমি এলে🥰 v6","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v6.mp3"},{"id":"Songs/🥰হঠাৎ করেই তুমি এলে🥰 v7.mp3::9673230","name":"🥰হঠাৎ করেই তুমি এলে🥰 v7","url":"./Songs/🥰হঠাৎ করেই তুমি এলে🥰 v7.mp3"},{"id":"Songs/🥲❤️😅 সুখ দর্পণ😅❤️🥲.mp3::11383038","name":"🥲❤️😅 সুখ দর্পণ😅❤️🥲","url":"./Songs/🥲❤️😅 সুখ দর্পণ😅❤️🥲.mp3"}];</script>
+</head>
+<body class="bg-slate-950 text-slate-200 antialiased overflow-x-hidden">
+<div id="app" v-cloak>
+  <div class="fixed inset-0 -z-10 bg-shift"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-lg border-b border-slate-800/60 px-3 md:px-5 h-16 flex items-center gap-2 md:gap-4">
+    <div class="flex items-center gap-2 shrink-0">
+      <button @click="sidebarOpen=!sidebarOpen" class="w-9 h-9 rounded-xl grid place-items-center text-slate-400 hover:text-white hover:bg-slate-800/60 transition active:scale-90" title="Toggle sidebar">
+        <span class="mi" v-text="sidebarOpen?'close':'menu'"></span>
+      </button>
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-cyan-300 to-indigo-500 grid place-items-center text-slate-950 font-black text-base">♪</div>
+      <span class="font-bold text-sm md:text-base tracking-tight truncate max-w-[180px] sm:max-w-[200px]">Aminur670 | AI Music</span>
+    </div>
+
+    <div class="flex items-center gap-1.5 md:gap-2 ml-auto hidden md:flex">
+      <button @click="openFolder()" class="flex items-center gap-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-sm px-3.5 py-2 rounded-lg transition active:scale-95">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18"/></svg>
+        Folder
+      </button>
+      <button @click="refreshTracks()" title="Scan for new tracks" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-sm px-3 py-2 rounded-lg transition active:scale-95">
+        <span class="mi text-base">refresh</span>
+      </button>
+      <label class="cursor-pointer flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-sm px-3.5 py-2 rounded-lg transition active:scale-95">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        Files
+        <input type="file" accept="audio/mpeg,.mp3" multiple class="hidden" @change="loadFilesFallback($event)" />
+      </label>
+      <div class="relative">
+        <button @click="showCreate=!showCreate" class="bg-slate-800 hover:bg-slate-700 text-sm px-3.5 py-2 rounded-lg transition active:scale-95">+ List</button>
+        <template v-if="showCreate">
+          <div class="fixed inset-0 z-30" @click="showCreate=false"></div>
+          <div class="absolute right-0 mt-1.5 z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-2.5 w-52 gl">
+          <div class="text-xs text-slate-400 mb-1.5 px-1">New playlist</div>
+          <input v-model="newCustom" @keydown.enter="createCustom()" placeholder="Name…" class="w-full bg-slate-800 text-sm rounded-lg px-3 py-2 outline-none border border-slate-700 focus:border-cyan-500" />
+          <button @click="createCustom()" class="mt-2 w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-sm font-semibold rounded-lg py-1.5">Create</button>
+        </div>
+        </template>
+      </div>
+    </div>
+
+      <div class="flex items-center gap-2 ml-2 hidden md:flex">
+      <button @click="s.shuffle=!s.shuffle" :class="s.shuffle?'bg-cyan-500/20 text-cyan-400 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-2 rounded-lg border transition active:scale-95 inline-flex items-center gap-1">Shuffle</button>
+      <button @click="cycleRepeat()" :class="s.repeat!=='off'?'bg-cyan-500/20 text-cyan-400 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-2 rounded-lg border transition active:scale-95 inline-flex items-center gap-1">
+        <span v-if="s.repeat==='off'">Repeat</span>
+        <span v-else-if="s.repeat==='all'">Repeat</span>
+        <span v-else>Repeat 1</span>
+      </button>
+      <button @click="favoriteAll()" :class="allFav?'bg-rose-500/20 text-rose-300 border-rose-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-2 rounded-lg border transition active:scale-95 inline">♥ All</button>
+      <span class="text-xs text-slate-500 ml-1 inline" v-text="s.tracks.length+' tracks'"></span>
+    </div>
+
+    <!-- Desktop queue button -->
+    <button @click="showQueue=true" class="hidden md:flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 text-sm px-3 py-2 rounded-lg border border-slate-700/40 transition active:scale-95 relative">
+      <span class="mi text-base">queue_music</span>
+      <span v-if="s.queue.length" class="absolute -top-1.5 -right-1.5 text-[9px] bg-cyan-500 text-slate-950 rounded-full w-4 h-4 grid place-items-center font-bold" v-text="s.queue.length"></span>
+    </button>
+    <!-- Desktop organise -->
+    <button v-if="s.rootHandle" @click="organizePreview()" class="hidden md:flex items-center gap-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 text-sm px-3.5 py-2 rounded-lg border border-indigo-500/20 transition active:scale-95">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16M4 12h16M4 19h16"/></svg>
+      Organize
+    </button>
+  </header>
+
+  <!-- ===== BODY ===== -->
+  <div class="flex" :class="isMobile?'':'h-[calc(100vh-4rem)]'">
+
+    <!-- BACKDROP (mobile drawer overlay) -->
+    <div v-show="isMobile && sidebarOpen" @click="sidebarOpen=false" class="fixed inset-0 z-[48] bg-black/60 backdrop-blur-sm md:hidden transition-opacity duration-200"></div>
+
+    <!-- SIDEBAR (drawer on mobile, inline collapsible on desktop) -->
+    <aside :class="[
+      'border-r border-slate-800/60 bg-slate-900/95 transition-all duration-200 flex flex-col',
+      isMobile
+        ? 'fixed left-0 z-[49] w-64 top-0 bottom-0 ' + (sidebarOpen ? 'translate-x-0' : '-translate-x-full pointer-events-none')
+        : (sidebarOpen ? 'hidden md:flex w-64 shrink-0 bg-slate-900/40' : 'hidden')
+    ]">
+      <!-- Profile card -->
+      <button @click="showLogin=true; if(isMobile)sidebarOpen=false" class="w-full flex items-center gap-3 px-4 pt-4 pb-3 border-b border-slate-800/50 mb-0.5 hover:bg-slate-800/30 transition text-left shrink-0">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-indigo-600 grid place-items-center text-white font-bold text-sm shrink-0" v-text="user.loggedIn?(user.name[0]||'?').toUpperCase():'♪'"></div>
+        <div class="min-w-0 flex-1">
+          <div class="text-sm font-semibold truncate" v-text="user.loggedIn?user.name:'Sign in'"></div>
+          <div class="text-[11px] text-slate-500 truncate" v-text="user.loggedIn?(s.tracks.length+' tracks'):(userHasAccount?'Tap to sign in':'Create account')"></div>
+        </div>
+      </button>
+
+      <!-- Now Playing (sidebar version) -->
+      <div v-if="current" @click="selectList('All');if(isMobile)sidebarOpen=false" class="flex items-center gap-3 px-4 py-3 border-b border-slate-800/40 bg-slate-800/20 cursor-pointer hover:bg-slate-800/40 transition shrink-0">
+        <div class="w-10 h-10 rounded-full grid place-items-center text-white/70 text-lg shrink-0 overflow-hidden disc" :class="s.isPlaying?'th-spin':''" :style="thumbBg(current.name)">♪</div>
+        <div class="min-w-0 flex-1">
+          <div class="text-sm font-semibold truncate" v-text="current.name.replace(/\.mp3$/i,'')"></div>
+          <div class="text-[11px] text-slate-500 truncate flex items-center gap-1">
+            <span class="eq eq-lg" v-if="s.isPlaying"><span></span><span></span><span></span><span></span></span>
+            <span v-else class="mi text-xs">play_arrow</span>
+            <span v-text="current.genre||'Unknown'"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable nav area -->
+      <div class="flex-1 overflow-y-auto min-h-0 sb-scroll">
+        <div class="p-2 space-y-0.5">
+        <div class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold px-3 pt-1 pb-0.5">Library</div>
+        <button @click="selectList('All');if(isMobile)sidebarOpen=false" :class="s.activeList==='All'?'bg-cyan-500/15 text-cyan-300':'text-slate-400 hover:bg-slate-800/60'" class="sb-item">
+          <span class="mi">music_note</span><span>All Songs</span>
+          <span class="ml-auto text-xs text-slate-500" v-text="s.tracks.length"></span>
+        </button>
+        <button @click="selectList('Favorites');if(isMobile)sidebarOpen=false" :class="s.activeList==='Favorites'?'bg-cyan-500/15 text-cyan-300':'text-slate-400 hover:bg-slate-800/60'" class="sb-item">
+          <span class="mi">favorite</span><span>Favorites</span>
+          <span class="ml-auto text-xs text-slate-500" v-text="s.favorites.length"></span>
+        </button>
+        <button @click="expandGenres=!expandGenres" class="sb-item text-slate-400 hover:bg-slate-800/60">
+          <span class="mi">queue_music</span><span>Genres</span>
+          <span class="ml-auto text-xs text-slate-500" v-text="genreList.length"></span>
+          <span class="text-[10px] text-slate-600 ml-1" v-text="expandGenres?'▼':'▶'"></span>
+        </button>
+        <div v-show="expandGenres" class="ml-8 space-y-0.5 border-l border-slate-700/50 pl-2">
+          <button v-for="g in genreList" :key="g" @click="selectList(g);if(isMobile)sidebarOpen=false" :class="s.activeList===g?'text-cyan-300':'text-slate-400 hover:text-white'" class="w-full text-left text-xs px-2 py-1.5 rounded flex items-center justify-between transition">
+            <span v-text="g"></span><span class="text-slate-500" v-text="s.genres[g].length"></span>
+          </button>
+        </div>
+        <div class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold mt-3 mb-0.5 px-3">Languages</div>
+        <button v-for="lang in langList" :key="lang" @click="selectList(lang);if(isMobile)sidebarOpen=false" :class="s.activeList===lang?'text-cyan-300':'text-slate-400 hover:text-white'" class="w-full text-left text-xs px-2 py-1 rounded flex items-center justify-between transition">
+          <span v-text="lang"></span><span class="text-slate-500" v-text="s.langs[lang].length"></span>
+        </button>
+        <div class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold mt-3 mb-0.5 px-3 flex items-center justify-between">
+          <span>Playlists</span>
+          <button @click="showCreate=!showCreate" class="text-slate-500 hover:text-white transition text-xs" title="Create playlist">+ Add</button>
+        </div>
+        <button v-for="c in customList" :key="c" @click="selectList(c);if(isMobile)sidebarOpen=false" :class="s.activeList===c?'bg-cyan-500/15 text-cyan-300':'text-slate-400 hover:bg-slate-800/60'" class="sb-item">
+          <span class="mi">playlist_play</span><span v-text="c"></span>
+          <span class="ml-auto text-xs text-slate-500" v-text="s.custom[c].length"></span>
+        </button>
+        <div v-if="!customList.length" class="text-xs text-slate-600 px-3 py-1 italic">No playlists yet</div>
+
+        <!-- Tools section -->
+        <div class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold mt-3 mb-0.5 px-3">Tools</div>
+        <button @click="openFolder()" class="sb-item text-slate-400 hover:bg-slate-800/60">
+          <span class="mi">folder_open</span><span>Open Folder</span>
+        </button>
+        <button @click="refreshTracks()" class="sb-item text-slate-400 hover:bg-slate-800/60">
+          <span class="mi">refresh</span><span>Scan Tracks</span>
+          <span v-if="s.scanning" class="sk ml-auto"></span>
+        </button>
+        <label class="sb-item text-slate-400 hover:bg-slate-800/60 cursor-pointer">
+          <span class="mi">upload_file</span><span>Import Files</span>
+          <input type="file" accept="audio/mpeg,.mp3" multiple class="hidden" @change="loadFilesFallback($event)" />
+        </label>
+        <button @click="showCreate=!showCreate" class="sb-item text-slate-400 hover:bg-slate-800/60">
+          <span class="mi">playlist_add</span><span>New Playlist</span>
+        </button>
+        <button @click="favoriteAll()" :class="allFav?'text-rose-300':'text-slate-400'" class="sb-item hover:bg-slate-800/60">
+          <span class="mi">favorite</span><span>♥ All</span>
+          <span class="ml-auto text-xs text-slate-500" v-text="s.tracks.length+' tracks'"></span>
+        </button>
+      </div>
+
+      <!-- Quick controls + Settings -->
+      <div class="border-t border-slate-800/50 p-2 space-y-0.5 shrink-0">
+        <button @click="s.shuffle=!s.shuffle" :class="s.shuffle?'text-cyan-300 bg-cyan-500/10':'text-slate-400 hover:bg-slate-800/60'" class="sb-item">
+          <span class="mi">shuffle</span><span>Shuffle</span>
+          <span class="ml-auto text-[10px] font-semibold" :class="s.shuffle?'text-cyan-400':'text-slate-600'" v-text="s.shuffle?'ON':'OFF'"></span>
+        </button>
+        <button @click="cycleRepeat()" :class="s.repeat!=='off'?'text-cyan-300 bg-cyan-500/10':'text-slate-400 hover:bg-slate-800/60'" class="sb-item">
+          <span class="mi">repeat</span><span>Repeat</span>
+          <span class="ml-auto text-[10px] font-semibold" :class="s.repeat!=='off'?'text-cyan-400':'text-slate-600'" v-text="s.repeat==='one'?'1':'ON'"></span>
+        </button>
+        <button @click="cycleTheme()" class="sb-item text-slate-400 hover:bg-slate-800/60">
+          <span class="mi">palette</span><span>Theme</span>
+          <span class="ml-auto text-[10px] text-slate-500" v-text="s.theme"></span>
+        </button>
+        <button @click="showSettings=true" class="sb-item text-slate-400 hover:bg-slate-800/60">
+          <span class="mi">settings</span><span>Settings</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 min-w-0 flex flex-col pb-28">
+
+      <!-- Scrollable content area (all views) -->
+      <div class="flex-1 overflow-y-auto min-h-0">
+        <template v-if="mobileTab==='tracks' || mobileTab==='favorites'">
+          <template v-if="!isMobile">
+            <!-- Desktop track table -->
+            <div class="px-4 md:px-5 py-3 border-b border-slate-800/60 flex items-center gap-3 flex-wrap">
+              <button @click="playList()" class="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:opacity-90 text-slate-950 font-semibold text-[15px] px-5 py-2.5 rounded-xl transition active:scale-95">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                Play <span v-text="s.activeList"></span>
+              </button>
+              <div class="relative flex-1 min-w-[160px] max-w-md">
+                <svg class="w-5 h-5 absolute left-3 top-3 text-slate-500 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4-4"/></svg>
+                <input v-model="s.search" placeholder="Search tracks…" class="w-full bg-slate-800/70 text-[15px] rounded-xl pl-10 pr-4 py-3 outline-none border border-slate-700/60 focus:border-cyan-500/60 transition" />
+              </div>
+              <div class="text-xs text-slate-500 flex items-center gap-1.5">
+                <span v-if="s.scanning" class="sk"></span>
+                <span v-text="visibleTracks.length + ' shown'"></span>
+              </div>
+            </div>
+            <!-- Dropdown filter bar -->
+            <div class="flex items-center gap-2 px-4 md:px-5 py-2 border-b border-slate-800/30 overflow-x-auto no-scrollbar shrink-0">
+              <div class="relative">
+                <button @click.stop="toggleFilter('genre', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeGenre?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span v-text="activeGenre||'Genre'"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="filterOpen==='genre'" class="fixed inset-0" @click="filterOpen=null"></div>
+                <div v-if="filterOpen==='genre'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-44 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                  <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList==='All'?'text-cyan-300':''">All <span class="text-slate-500" v-text="s.tracks.length"></span></button>
+                  <button v-for="g in genreList" :key="g" @click="selectFilter(g)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===g?'text-cyan-300':''"><span v-text="g"></span><span class="text-slate-500" v-text="s.genres[g].length"></span></button>
+                </div>
+              </div>
+              <div class="relative">
+                <button @click.stop="toggleFilter('lang', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeLang?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span v-text="activeLang||'Language'"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="filterOpen==='lang'" class="fixed inset-0" @click="filterOpen=null"></div>
+                <div v-if="filterOpen==='lang'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                  <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800" :class="s.activeList==='All'?'text-cyan-300':''">All</button>
+                  <button v-for="l in langList" :key="l" @click="selectFilter(l)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===l?'text-cyan-300':''"><span v-text="l"></span><span class="text-slate-500" v-text="s.langs[l].length"></span></button>
+                </div>
+              </div>
+              <div class="relative ml-auto">
+                <button @click.stop="toggleSort($event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="s.sortKey!='default'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span>Sort: </span><span v-text="sortLabel"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="sortOpen" class="fixed inset-0" @click="sortOpen=null"></div>
+                <div v-if="sortOpen" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 gl" :style="dropdownStyle">
+                  <button @click="sortBy('default'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='default'?'text-cyan-300':''">Default</button>
+                  <button @click="sortBy('name'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='name'?'text-cyan-300':''"><span>Name</span><span v-if="s.sortKey==='name'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('genre'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='genre'?'text-cyan-300':''"><span>Genre</span><span v-if="s.sortKey==='genre'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('lang'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='lang'?'text-cyan-300':''"><span>Lang</span><span v-if="s.sortKey==='lang'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('duration'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='duration'?'text-cyan-300':''"><span>Time</span><span v-if="s.sortKey==='duration'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                </div>
+              </div>
+            </div>
+            <table class="w-full text-[15px]">
+              <thead class="sticky top-0 bg-slate-950/95 backdrop-blur text-slate-400 text-xs uppercase tracking-wider">
+                <tr>
+                  <th class="text-left font-medium px-4 py-3 w-8">#</th>
+                  <th class="text-left font-medium px-4 py-3 cursor-pointer select-none hover:text-cyan-300 transition" @click="sortBy('name')">Title <span v-if="s.sortKey==='name'" class="text-cyan-400 ml-1 text-[11px]" v-text="s.sortDir===1?'▲':'▼'"></span></th>
+                  <th class="text-left font-medium px-4 py-3 w-28 cursor-pointer select-none hover:text-cyan-300 transition hidden sm:table-cell" @click="sortBy('genre')">Genre <span v-if="s.sortKey==='genre'" class="text-cyan-400 ml-1 text-[11px]" v-text="s.sortDir===1?'▲':'▼'"></span></th>
+                  <th class="text-center font-medium px-4 py-3 w-12 cursor-pointer select-none hover:text-cyan-300 transition hidden sm:table-cell" @click="sortBy('lang')">Lang <span v-if="s.sortKey==='lang'" class="text-cyan-400 ml-1 text-[11px]" v-text="s.sortDir===1?'▲':'▼'"></span></th>
+                  <th class="text-right font-medium px-4 py-3 w-14 cursor-pointer select-none hover:text-cyan-300 transition" @click="sortBy('duration')">Time <span v-if="s.sortKey==='duration'" class="text-cyan-400 ml-1 text-[11px]" v-text="s.sortDir===1?'▲':'▼'"></span></th>
+                  <th class="text-center font-medium px-4 py-3 w-10">♥</th>
+                  <th class="text-center font-medium px-4 py-3 w-8">Q</th>
+                  <th class="text-center font-medium px-4 py-3 w-8">+</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(t,i) in visibleTracks" :key="t.id" @click="onTrackClick(t.id)" @touchstart="onTrackPress($event,t.id)" @touchend="onTrackRelease" @touchmove="onTrackMove" @mousedown="onTrackPress($event,t.id)" @mouseup="onTrackRelease" @mouseleave="onTrackRelease" @contextmenu.prevent="openTrackMenu($event,t.id)" :class="s.currentId===t.id?'bg-cyan-500/8':'hover:bg-slate-800/40'" class="border-b border-slate-800/30 cursor-pointer group transition">
+                  <td class="px-4 py-3 text-slate-500 text-sm align-middle">
+                    <span v-if="s.currentId===t.id && s.isPlaying" class="eq eq-lg"><span></span><span></span><span></span><span></span></span>
+                    <span v-else v-text="i+1"></span>
+                  </td>
+                  <td class="py-3 pr-3 min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span :class="s.currentId===t.id?'text-cyan-300 font-medium':'text-slate-200'" class="truncate text-[15px]" v-text="t.name"></span>
+                    </div>
+                  </td>
+                  <td class="py-3 text-slate-500 hidden sm:table-cell"><span class="text-xs px-2.5 py-1 rounded-md bg-slate-800/70" v-text="t.genre"></span></td>
+                  <td class="py-3 text-slate-500 hidden sm:table-cell"><span class="text-[11px] px-1.5 py-0.5 rounded bg-slate-800/40 text-slate-500 uppercase" v-text="t.lang"></span></td>
+                  <td class="py-3 text-right text-slate-500 text-sm align-middle" v-text="t.duration?fmt(t.duration):'—'"></td>
+                  <td class="py-3 text-center align-middle">
+                    <button @click.stop="toggleFav(t.id)" :class="s.favorites.includes(t.id)?'text-rose-400':'text-slate-600 hover:text-rose-400'" class="transition text-base">♥</button>
+                  </td>
+                  <td class="py-3 text-center align-middle">
+                    <button @click.stop="addToQueue(t.id,'last')" class="text-slate-600 hover:text-cyan-400 transition text-base opacity-0 group-hover:opacity-100" title="Add to Queue">⊕</button>
+                  </td>
+                  <td class="py-3 text-center align-middle">
+                    <button @click.stop="openAdd(t.id)" class="text-slate-600 hover:text-cyan-400 transition text-base opacity-0 group-hover:opacity-100">＋</button>
+                  </td>
+                </tr>
+                <tr v-if="visibleTracks.length===0">
+                  <td colspan="8" class="text-center text-slate-500 py-20">
+                    <div class="text-5xl mb-4 opacity-40">♪♪</div>
+                    <div v-if="!s.tracks.length">Load music to get started.</div>
+                    <div v-else>No tracks match your search.</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </template>
+          <template v-else>
+            <!-- Mobile track list -->
+            <div class="px-4 py-3 border-b border-slate-800/60 flex items-center justify-between">
+              <h2 class="font-semibold text-lg" v-text="s.activeList"></h2>
+              <span class="text-sm text-slate-500" v-text="visibleTracks.length+' tracks'"></span>
+            </div>
+            <div class="px-4 pb-2 pt-1">
+              <input v-model="s.search" placeholder="Search…" class="w-full bg-slate-800/70 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700/60 focus:border-cyan-500/60" />
+            </div>
+            <div class="flex items-center gap-2 px-4 py-2 border-b border-slate-800/30 overflow-x-auto no-scrollbar shrink-0">
+              <div class="relative">
+                <button @click.stop="toggleFilter('genre', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeGenre?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span v-text="activeGenre||'Genre'"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="filterOpen==='genre'" class="fixed inset-0" @click="filterOpen=null"></div>
+                <div v-if="filterOpen==='genre'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-44 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                  <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList==='All'?'text-cyan-300':''">All <span class="text-slate-500" v-text="s.tracks.length"></span></button>
+                  <button v-for="g in genreList" :key="g" @click="selectFilter(g)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===g?'text-cyan-300':''"><span v-text="g"></span><span class="text-slate-500" v-text="s.genres[g].length"></span></button>
+                </div>
+              </div>
+              <div class="relative">
+                <button @click.stop="toggleFilter('lang', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeLang?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span v-text="activeLang||'Language'"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="filterOpen==='lang'" class="fixed inset-0" @click="filterOpen=null"></div>
+                <div v-if="filterOpen==='lang'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                  <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800" :class="s.activeList==='All'?'text-cyan-300':''">All</button>
+                  <button v-for="l in langList" :key="l" @click="selectFilter(l)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===l?'text-cyan-300':''"><span v-text="l"></span><span class="text-slate-500" v-text="s.langs[l].length"></span></button>
+                </div>
+              </div>
+              <div class="relative ml-auto">
+                <button @click.stop="toggleSort($event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="s.sortKey!='default'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span>Sort: </span><span v-text="sortLabel"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="sortOpen" class="fixed inset-0" @click="sortOpen=null"></div>
+                <div v-if="sortOpen" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 gl" :style="dropdownStyle">
+                  <button @click="sortBy('default'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='default'?'text-cyan-300':''">Default</button>
+                  <button @click="sortBy('name'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='name'?'text-cyan-300':''"><span>Name</span><span v-if="s.sortKey==='name'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('genre'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='genre'?'text-cyan-300':''"><span>Genre</span><span v-if="s.sortKey==='genre'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('lang'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='lang'?'text-cyan-300':''"><span>Lang</span><span v-if="s.sortKey==='lang'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('duration'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='duration'?'text-cyan-300':''"><span>Time</span><span v-if="s.sortKey==='duration'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="px-1">
+              <div v-for="(t,i) in visibleTracks" :key="t.id" @click="onTrackClick(t.id)" @touchstart="onTrackPress($event,t.id)" @touchend="onTrackRelease" @touchmove="onTrackMove" @mousedown="onTrackPress($event,t.id)" @mouseup="onTrackRelease" @mouseleave="onTrackRelease" @contextmenu.prevent="openTrackMenu($event,t.id)" :class="s.currentId===t.id?'bg-cyan-500/8':'active:bg-slate-800/50'" class="flex items-center gap-3 px-3 py-3 rounded-xl active:scale-[0.98] transition select-none">
+                <div class="w-9 h-9 rounded-lg bg-slate-800/60 grid place-items-center text-slate-500 text-sm shrink-0">
+                  <span v-if="s.currentId===t.id && s.isPlaying" class="eq"><span></span><span></span><span></span><span></span></span>
+                  <span v-else v-text="i+1"></span>
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div :class="s.currentId===t.id?'text-cyan-300 font-medium':'text-slate-200'" class="truncate text-[15px]" v-text="t.name"></div>
+                  <div class="text-xs text-slate-500" v-text="t.genre + (t.duration?' · '+fmt(t.duration):'')"></div>
+                </div>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/40 text-slate-500 uppercase shrink-0" v-text="t.lang"></span>
+                <button @click.stop="toggleFav(t.id)" :class="s.favorites.includes(t.id)?'text-rose-400':'text-slate-600'" class="text-lg shrink-0">♥</button>
+                <button @click.stop="addToQueue(t.id,'last')" class="text-lg shrink-0 text-slate-600" title="Add to Queue">⊕</button>
+                <button @click.stop="openAdd(t.id)" class="text-lg shrink-0 text-slate-600 ">＋</button>
+              </div>
+              <div v-if="visibleTracks.length===0" class="text-center text-slate-500 py-20">No tracks.</div>
+            </div>
+          </template>
+        </template>
+
+        <!-- Playlists / Genres / Languages / My List -->
+        <template v-else-if="mobileTab==='playlists'">
+          <div class="flex items-center gap-1 px-3 py-2 border-b border-slate-800/60 overflow-x-auto no-scrollbar shrink-0">
+            <button v-for="pt in ['favorites','genres','languages','playlists','mylist']" :key="pt" @click="playlistTab=pt" :class="playlistTab===pt?'bg-cyan-500/15 text-cyan-300 border-cyan-500/30':'text-slate-400 border-transparent hover:bg-slate-800/40'" class="text-xs px-3 py-1.5 rounded-lg border whitespace-nowrap transition capitalize shrink-0">
+              <span v-text="pt==='mylist'?'My List':pt"></span>
+            </button>
+          </div>
+          <div class="p-4 space-y-1.5">
+            <template v-if="playlistTab==='favorites'">
+              <button @click="pickPlaylist('Favorites')" class="w-full flex items-center justify-between px-5 py-3.5 rounded-xl bg-slate-800/50 active:scale-[0.98] transition">
+                <span class="flex items-center gap-3"><span class="text-xl">♥</span><span class="font-medium text-[15px]">Favorites</span></span><span class="text-sm text-slate-500" v-text="s.favorites.length"></span>
+              </button>
+              <div class="flex items-center gap-2 px-4 py-2 border-b border-slate-800/30 overflow-x-auto no-scrollbar shrink-0">
+                <div class="relative">
+                  <button @click.stop="toggleFilter('genre', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeGenre?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                    <span v-text="activeGenre||'Genre'"></span><span class="text-[10px]">▼</span>
+                  </button>
+                  <div v-if="filterOpen==='genre'" class="fixed inset-0" @click="filterOpen=null"></div>
+                  <div v-if="filterOpen==='genre'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-44 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                    <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList==='All'?'text-cyan-300':''">All <span class="text-slate-500" v-text="s.tracks.length"></span></button>
+                    <button v-for="g in genreList" :key="g" @click="selectFilter(g)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===g?'text-cyan-300':''"><span v-text="g"></span><span class="text-slate-500" v-text="s.genres[g].length"></span></button>
+                  </div>
+                </div>
+                <div class="relative">
+                  <button @click.stop="toggleFilter('lang', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeLang?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                    <span v-text="activeLang||'Language'"></span><span class="text-[10px]">▼</span>
+                  </button>
+                  <div v-if="filterOpen==='lang'" class="fixed inset-0" @click="filterOpen=null"></div>
+                  <div v-if="filterOpen==='lang'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                    <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800" :class="s.activeList==='All'?'text-cyan-300':''">All</button>
+                    <button v-for="l in langList" :key="l" @click="selectFilter(l)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===l?'text-cyan-300':''"><span v-text="l"></span><span class="text-slate-500" v-text="s.langs[l].length"></span></button>
+                  </div>
+                </div>
+                <div class="relative ml-auto">
+                  <button @click.stop="toggleSort($event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="s.sortKey!='default'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                    <span>Sort: </span><span v-text="sortLabel"></span><span class="text-[10px]">▼</span>
+                  </button>
+                  <div v-if="sortOpen" class="fixed inset-0" @click="sortOpen=null"></div>
+                  <div v-if="sortOpen" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 gl" :style="dropdownStyle">
+                    <button @click="sortBy('default'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='default'?'text-cyan-300':''">Default</button>
+                    <button @click="sortBy('name'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='name'?'text-cyan-300':''"><span>Name</span><span v-if="s.sortKey==='name'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                    <button @click="sortBy('genre'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='genre'?'text-cyan-300':''"><span>Genre</span><span v-if="s.sortKey==='genre'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                    <button @click="sortBy('lang'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='lang'?'text-cyan-300':''"><span>Lang</span><span v-if="s.sortKey==='lang'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                    <button @click="sortBy('duration'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='duration'?'text-cyan-300':''"><span>Time</span><span v-if="s.sortKey==='duration'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  </div>
+                </div>
+              </div>
+              <div v-for="t in visibleTracks.filter(t=>s.favorites.includes(t.id))" :key="t.id" @click="onTrackClick(t.id)" @touchstart="onTrackPress($event,t.id)" @touchend="onTrackRelease" @touchmove="onTrackMove" @contextmenu.prevent="openTrackMenu($event,t.id)" class="flex items-center gap-3 px-3 py-3 rounded-xl active:scale-[0.98] transition">
+                <div class="w-9 h-9 rounded-lg bg-slate-800/60 grid place-items-center text-slate-500 text-sm shrink-0">
+                  <span v-if="s.currentId===t.id && s.isPlaying" class="eq"><span></span><span></span><span></span><span></span></span>
+                  <span v-else>♥</span>
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div :class="s.currentId===t.id?'text-cyan-300 font-medium':'text-slate-200'" class="truncate text-[15px]" v-text="t.name"></div>
+                  <div class="text-xs text-slate-500" v-text="t.genre"></div>
+                </div>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/40 text-slate-500 uppercase shrink-0" v-text="t.lang"></span>
+                <button @click.stop="toggleFav(t.id)" :class="s.favorites.includes(t.id)?'text-rose-400':'text-slate-600'" class="text-lg shrink-0">♥</button>
+                <button @click.stop="addToQueue(t.id,'last')" class="text-lg shrink-0 text-slate-600" title="Add to Queue">⊕</button>
+                <button @click.stop="openAdd(t.id)" class="text-lg shrink-0 text-slate-600">＋</button>
+              </div>
+              <div v-if="!s.favorites.length" class="text-center text-slate-500 py-20">No favorites yet.</div>
+            </template>
+            <template v-else-if="playlistTab==='genres'">
+              <button v-for="g in genreList" :key="g" @click="pickPlaylist(g)" class="w-full flex items-center justify-between px-5 py-3.5 rounded-xl bg-slate-800/30 active:scale-[0.98] transition">
+                <span class="text-[15px]" v-text="g"></span><span class="text-sm text-slate-500" v-text="s.genres[g].length"></span>
+              </button>
+            </template>
+            <template v-else-if="playlistTab==='languages'">
+              <button v-for="l in langList" :key="l" @click="pickPlaylist(l)" class="w-full flex items-center justify-between px-5 py-3.5 rounded-xl bg-slate-800/30 active:scale-[0.98] transition">
+                <span class="text-[15px]" v-text="l"></span><span class="text-sm text-slate-500" v-text="s.langs[l].length"></span>
+              </button>
+            </template>
+            <template v-else-if="playlistTab==='playlists'">
+              <button @click="pickPlaylist('All')" class="w-full flex items-center justify-between px-5 py-3.5 rounded-xl bg-slate-800/50 active:scale-[0.98] transition">
+                <span class="flex items-center gap-3"><span class="text-xl">♪</span><span class="font-medium text-[15px]">All Songs</span></span><span class="text-sm text-slate-500" v-text="s.tracks.length"></span>
+              </button>
+              <div class="flex items-center gap-2 px-4 py-2 border-b border-slate-800/30 overflow-x-auto no-scrollbar shrink-0">
+                <div class="relative">
+                  <button @click.stop="toggleFilter('genre', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeGenre?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                    <span v-text="activeGenre||'Genre'"></span><span class="text-[10px]">▼</span>
+                  </button>
+                  <div v-if="filterOpen==='genre'" class="fixed inset-0" @click="filterOpen=null"></div>
+                  <div v-if="filterOpen==='genre'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-44 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                    <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList==='All'?'text-cyan-300':''">All <span class="text-slate-500" v-text="s.tracks.length"></span></button>
+                    <button v-for="g in genreList" :key="g" @click="selectFilter(g)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===g?'text-cyan-300':''"><span v-text="g"></span><span class="text-slate-500" v-text="s.genres[g].length"></span></button>
+                  </div>
+                </div>
+                <div class="relative">
+                  <button @click.stop="toggleFilter('lang', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeLang?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                    <span v-text="activeLang||'Language'"></span><span class="text-[10px]">▼</span>
+                  </button>
+                  <div v-if="filterOpen==='lang'" class="fixed inset-0" @click="filterOpen=null"></div>
+                  <div v-if="filterOpen==='lang'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                    <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800" :class="s.activeList==='All'?'text-cyan-300':''">All</button>
+                    <button v-for="l in langList" :key="l" @click="selectFilter(l)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===l?'text-cyan-300':''"><span v-text="l"></span><span class="text-slate-500" v-text="s.langs[l].length"></span></button>
+                  </div>
+                </div>
+                <div class="relative ml-auto">
+                  <button @click.stop="toggleSort($event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="s.sortKey!='default'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                    <span>Sort: </span><span v-text="sortLabel"></span><span class="text-[10px]">▼</span>
+                  </button>
+                  <div v-if="sortOpen" class="fixed inset-0" @click="sortOpen=null"></div>
+                  <div v-if="sortOpen" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 gl" :style="dropdownStyle">
+                    <button @click="sortBy('default'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='default'?'text-cyan-300':''">Default</button>
+                    <button @click="sortBy('name'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='name'?'text-cyan-300':''"><span>Name</span><span v-if="s.sortKey==='name'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                    <button @click="sortBy('genre'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='genre'?'text-cyan-300':''"><span>Genre</span><span v-if="s.sortKey==='genre'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                    <button @click="sortBy('lang'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='lang'?'text-cyan-300':''"><span>Lang</span><span v-if="s.sortKey==='lang'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                    <button @click="sortBy('duration'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='duration'?'text-cyan-300':''"><span>Time</span><span v-if="s.sortKey==='duration'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  </div>
+                </div>
+              </div>
+              <div v-for="(t,i) in visibleTracks" :key="t.id" @click="onTrackClick(t.id)" @touchstart="onTrackPress($event,t.id)" @touchend="onTrackRelease" @touchmove="onTrackMove" @contextmenu.prevent="openTrackMenu($event,t.id)" class="flex items-center gap-3 px-3 py-3 rounded-xl active:scale-[0.98] transition">
+                <div class="w-9 h-9 rounded-lg bg-slate-800/60 grid place-items-center text-slate-500 text-sm shrink-0" v-text="i+1"></div>
+                <div class="min-w-0 flex-1">
+                  <div :class="s.currentId===t.id?'text-cyan-300 font-medium':'text-slate-200'" class="truncate text-[15px]" v-text="t.name"></div>
+                  <div class="text-xs text-slate-500" v-text="t.genre"></div>
+                </div>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/40 text-slate-500 uppercase shrink-0" v-text="t.lang"></span>
+                <button @click.stop="toggleFav(t.id)" :class="s.favorites.includes(t.id)?'text-rose-400':'text-slate-600'" class="text-lg shrink-0">♥</button>
+                <button @click.stop="addToQueue(t.id,'last')" class="text-lg shrink-0 text-slate-600" title="Add to Queue">⊕</button>
+                <button @click.stop="openAdd(t.id)" class="text-lg shrink-0 text-slate-600">＋</button>
+              </div>
+            </template>
+            <template v-else-if="playlistTab==='mylist'">
+              <div v-if="customList.length">
+                <button v-for="c in customList" :key="c" @click="pickPlaylist(c)" class="w-full flex items-center justify-between px-5 py-3.5 rounded-xl bg-slate-800/30 active:scale-[0.98] transition">
+                  <span class="flex items-center gap-2"><span>♪</span><span class="text-[15px]" v-text="c"></span></span><span class="text-sm text-slate-500" v-text="s.custom[c].length"></span>
+                </button>
+              </div>
+              <div v-else class="text-center text-slate-500 py-20">No custom playlists yet.<br><span class="text-xs">Tap + List in header to create one.</span></div>
+            </template>
+          </div>
+        </template>
+
+        <!-- Search view -->
+        <template v-else-if="mobileTab==='search'">
+          <div class="p-3 border-b border-slate-800/60">
+            <div class="relative">
+              <svg class="w-5 h-5 absolute left-3.5 top-3 text-slate-500 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4-4"/></svg>
+              <input v-model="s.search" placeholder="Search all tracks…" class="w-full bg-slate-800/70 text-[15px] rounded-xl pl-10 pr-4 py-3 outline-none border border-slate-700/60 focus:border-cyan-500/60" />
+            </div>
+          </div>
+          <div class="flex items-center gap-2 px-4 py-2 border-b border-slate-800/30 overflow-x-auto no-scrollbar shrink-0">
+              <div class="relative">
+                <button @click.stop="toggleFilter('genre', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeGenre?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span v-text="activeGenre||'Genre'"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="filterOpen==='genre'" class="fixed inset-0" @click="filterOpen=null"></div>
+                <div v-if="filterOpen==='genre'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-44 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                  <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList==='All'?'text-cyan-300':''">All <span class="text-slate-500" v-text="s.tracks.length"></span></button>
+                  <button v-for="g in genreList" :key="g" @click="selectFilter(g)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===g?'text-cyan-300':''"><span v-text="g"></span><span class="text-slate-500" v-text="s.genres[g].length"></span></button>
+                </div>
+              </div>
+              <div class="relative">
+                <button @click.stop="toggleFilter('lang', $event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="activeLang?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span v-text="activeLang||'Language'"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="filterOpen==='lang'" class="fixed inset-0" @click="filterOpen=null"></div>
+                <div v-if="filterOpen==='lang'" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 max-h-60 overflow-y-auto gl" :style="dropdownStyle">
+                  <button @click="selectFilter('All')" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800" :class="s.activeList==='All'?'text-cyan-300':''">All</button>
+                  <button v-for="l in langList" :key="l" @click="selectFilter(l)" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.activeList===l?'text-cyan-300':''"><span v-text="l"></span><span class="text-slate-500" v-text="s.langs[l].length"></span></button>
+                </div>
+              </div>
+              <div class="relative ml-auto">
+                <button @click.stop="toggleSort($event)" class="text-xs px-3 py-1.5 rounded-lg border transition whitespace-nowrap flex items-center gap-1" :class="s.sortKey!='default'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'">
+                  <span>Sort: </span><span v-text="sortLabel"></span><span class="text-[10px]">▼</span>
+                </button>
+                <div v-if="sortOpen" class="fixed inset-0" @click="sortOpen=null"></div>
+                <div v-if="sortOpen" class="fixed z-dropdown bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-1.5 w-36 gl" :style="dropdownStyle">
+                  <button @click="sortBy('default'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='default'?'text-cyan-300':''">Default</button>
+                  <button @click="sortBy('name'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='name'?'text-cyan-300':''"><span>Name</span><span v-if="s.sortKey==='name'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('genre'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='genre'?'text-cyan-300':''"><span>Genre</span><span v-if="s.sortKey==='genre'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('lang'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='lang'?'text-cyan-300':''"><span>Lang</span><span v-if="s.sortKey==='lang'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                  <button @click="sortBy('duration'); sortOpen=null" class="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-slate-800 flex items-center justify-between" :class="s.sortKey==='duration'?'text-cyan-300':''"><span>Time</span><span v-if="s.sortKey==='duration'" class="text-cyan-400" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+                </div>
+              </div>
+          </div>
+          <div class="px-1">
+            <div v-for="(t,i) in visibleTracks" :key="t.id" @click="onTrackClick(t.id)" @touchstart="onTrackPress($event,t.id)" @touchend="onTrackRelease" @touchmove="onTrackMove" @contextmenu.prevent="openTrackMenu($event,t.id)" class="flex items-center gap-3 px-3 py-3 rounded-xl active:scale-[0.98] transition">
+              <div class="w-9 h-9 rounded-lg bg-slate-800/60 grid place-items-center text-slate-500 text-sm shrink-0" v-text="i+1"></div>
+              <div class="min-w-0 flex-1">
+                <div class="truncate text-[15px] text-slate-200" v-text="t.name"></div>
+                <div class="text-xs text-slate-500" v-text="t.genre"></div>
+              </div>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/40 text-slate-500 uppercase shrink-0" v-text="t.lang"></span>
+              <button @click.stop="toggleFav(t.id)" :class="s.favorites.includes(t.id)?'text-rose-400':'text-slate-600'" class="text-lg shrink-0">♥</button>
+              <button @click.stop="addToQueue(t.id,'last')" class="text-lg shrink-0 text-slate-600" title="Add to Queue">⊕</button>
+              <button @click.stop="openAdd(t.id)" class="text-lg shrink-0 text-slate-600">＋</button>
+            </div>
+            <div v-if="visibleTracks.length===0" class="text-center text-slate-500 py-20">No results.</div>
+          </div>
+        </template>
+
+        <!-- Now Playing view -->
+        <template v-else-if="mobileTab==='now'">
+          <div class="p-5 flex flex-col items-center text-center">
+            <template v-if="current">
+              <div class="w-48 h-48 md:w-64 md:h-64 rounded-full grid place-items-center text-white/90 text-7xl shadow-lg gl-2 overflow-hidden disc" :class="s.isPlaying?'th-spin':''" :style="thumbBg(current?.name)" @touchstart="onTrackPress($event,current?.id)" @touchend="onTrackRelease" @contextmenu.prevent="openTrackMenu($event,current.id)"><span>♫</span></div>
+              <div class="flex items-center justify-center gap-2 mt-6 w-full">
+                <h2 class="text-2xl font-bold truncate max-w-[80%]" v-text="current.name"></h2>
+                <button @click="openTrackMenu($event,current.id)" class="text-slate-500 hover:text-white transition text-xl shrink-0">⋯</button>
+              </div>
+              <p class="text-[15px] text-slate-400" v-text="'♪ '+current.genre"></p>
+            </template>
+            <template v-else>
+              <div class="w-32 h-32 rounded-full bg-slate-800/40 border border-slate-700/40 grid place-items-center text-white/30 text-6xl shadow-lg mb-5 float-disc"><span>♫</span></div>
+              <h2 class="text-xl font-semibold text-slate-400 mt-6">Nothing playing</h2>
+              <p class="text-sm text-slate-500 mt-1">Tap to browse &amp; play</p>
+            </template>
+            <div class="w-full mt-6">
+              <div class="flex items-center gap-2">
+                <span class="text-sm text-slate-500 w-10 text-right" v-text="fmt(s.currentTime)"></span>
+                <input type="range" class="rg flex-1" min="0" :max="s.duration||0" step="0.1" v-model.number="s.currentTime" @input="onSeekInput()" @change="endSeek()" @blur="endSeek()" />
+                <span class="text-sm text-slate-500 w-10" v-text="fmt(s.duration)"></span>
+              </div>
+            </div>
+            <div class="flex items-center gap-8 mt-7">
+              <button @click="prev()" class="text-slate-400 hover:text-white active:scale-90 transition"><svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+              <button @click="togglePlay()" class="w-[4.5rem] h-[4.5rem] rounded-full bg-gradient-to-br from-cyan-500 to-indigo-500 hover:opacity-90 text-slate-950 grid place-items-center active:scale-90 transition shadow-lg pp" :class="s.isPlaying?'is-pg':''">
+                <svg v-show="!s.isPlaying" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg v-show="s.isPlaying" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+              </button>
+              <button @click="next()" class="text-slate-400 hover:text-white active:scale-90 transition"><svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+              <button @click="stopPlayback()" class="text-slate-500 hover:text-rose-400 active:scale-90 transition" title="Stop"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg></button>
+            </div>
+            <div class="flex items-center justify-center gap-6 mt-5">
+              <button @click="s.shuffle=!s.shuffle" :class="s.shuffle?'text-cyan-300':'text-slate-500'" class="flex items-center gap-1 text-sm active:scale-90 transition">
+                <span class="mi" :class="s.shuffle?'text-cyan-400':'opacity-60'">shuffle</span>
+                <span class="text-xs" v-text="s.shuffle?'ON':'OFF'"></span>
+              </button>
+              <button @click="cycleRepeat()" :class="s.repeat!=='off'?'text-cyan-300':'text-slate-500'" class="flex items-center gap-1 text-sm active:scale-90 transition">
+                <span class="mi" :class="s.repeat!=='off'?'text-cyan-400':'opacity-60'">repeat</span>
+                <span class="text-xs" v-text="s.repeat==='one'?'1':s.repeat!=='off'?'ALL':'OFF'"></span>
+              </button>
+              <button v-if="current" @click="toggleFav(s.currentId)" :class="s.favorites.includes(s.currentId)?'text-rose-400':'text-slate-500'" class="flex items-center gap-1 text-sm active:scale-90 transition">
+                <span class="mi" :class="s.favorites.includes(s.currentId)?'':'opacity-60'">favorite</span>
+                <span class="text-xs" v-text="s.favorites.includes(s.currentId)?'Loved':'Like'"></span>
+              </button>
+              <button @click="showQueue=true" class="text-slate-500 hover:text-cyan-300 flex items-center gap-1 text-sm active:scale-90 transition">
+                <span class="mi">queue_music</span>
+                <span class="text-xs" v-text="'('+s.queue.length+')'"></span>
+              </button>
+            </div>
+            <div v-if="currentPlayStats" class="mt-4 text-xs text-slate-500">
+              <span v-text="'Played '+currentPlayStats.plays+' times'"></span>
+            </div>
+            <div class="w-full mt-4">
+              <div class="flex items-center gap-2">
+                <span class="mi text-sm text-slate-500">volume_up</span>
+                <input type="range" class="rg flex-1" min="0" max="1" step="0.01" v-model.number="s.volume" @input="applyVolume()" />
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Audio element (both mobile and desktop) -->
+      <audio ref="audio" @loadedmetadata="onMeta" @timeupdate="onTime" @ended="onEnded" @error="onError" @play="s.isPlaying=true" @pause="s.isPlaying=false" preload="metadata"></audio>
+    </main>
+  </div>
+
+  <!-- ===== ADD-TO-PLAYLIST MODAL ===== -->
+  <div v-if="addMenu!==null" class="fixed inset-0 z-50 bg-black/50 flex items-end sm:items-center justify-center" @click.self="addMenu=null">
+    <div class="w-full sm:w-80 bg-slate-900 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl p-5 gl modal-in" @click.stop>
+      <div class="text-[15px] font-semibold text-slate-300 mb-3">Add to playlist</div>
+      <button v-for="pl in addTargets" :key="pl" @click="addToPlaylist(pl,addMenu)" class="w-full text-left text-[15px] px-4 py-3 rounded-xl hover:bg-slate-800 flex items-center gap-2 transition">
+        <span v-text="pl==='Favorites'?'♥':'♪'"></span><span v-text="pl"></span>
+      </button>
+      <div class="border-t border-slate-700/60 my-2"></div>
+      <input v-model="newCustom2" @keydown.enter="createCustom(addMenu)" placeholder="New playlist…" class="w-full bg-slate-800 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700 focus:border-cyan-500" />
+    </div>
+  </div>
+
+  <!-- ===== ORGANIZE PREVIEW MODAL ===== -->
+  <div v-if="s.organizePreview" class="fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center" @click.self="s.organizePreview=null">
+    <div class="w-full sm:w-[30rem] bg-slate-900 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl p-5 gl modal-in max-h-[80vh] overflow-y-auto">
+      <h3 class="text-lg font-semibold mb-1">Organize by genre</h3>
+      <p class="text-xs text-slate-400 mb-4">Files will be moved into <code class="text-cyan-300">genre/</code> subfolders on disk. This is permanent.</p>
+      <div class="space-y-1 mb-4">
+        <div v-for="row in s.organizePreview" :key="row.genre" class="flex items-center justify-between bg-slate-800/60 rounded-xl px-3 py-2.5">
+          <span class="truncate font-medium text-sm"><span class="text-cyan-300" v-text="row.genre"></span> <span class="text-slate-500 text-xs" v-text="'('+row.count+')'"></span></span>
+          <span class="text-xs text-slate-500 truncate max-w-[10rem]" v-text="row.samples[0]||''"></span>
+        </div>
+      </div>
+      <div class="flex gap-2 justify-end">
+        <button @click="s.organizePreview=null" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm transition">Cancel</button>
+        <button @click="applyOrganize()" :disabled="s.busy" class="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white text-sm font-semibold disabled:opacity-50 transition">
+          <span v-if="s.busy" class="sp inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full mr-1.5"></span>
+          Move <span v-text="s.tracks.length"></span> files
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TRACK CONTEXT MENU ===== -->
+  <div v-if="trackMenu" class="fixed inset-0 z-50 bg-black/50 flex items-end sm:items-center justify-center" @click.self="closeTrackMenu">
+    <div class="w-full sm:w-72 bg-slate-900 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 gl modal-in" @click.stop>
+      <div class="text-[15px] font-semibold text-slate-300 mb-2 px-1 truncate" v-text="(getTrack(trackMenu)||{}).name||'Track'"></div>
+      <button @click="addToQueue(trackMenu,'now');closeTrackMenu()" class="w-full text-left text-sm px-4 py-3 rounded-xl hover:bg-slate-800 flex items-center gap-3 transition">
+        <span class="mi text-base w-5">play_arrow</span> Play Now
+      </button>
+      <button @click="addToQueue(trackMenu,'next');closeTrackMenu()" class="w-full text-left text-sm px-4 py-3 rounded-xl hover:bg-slate-800 flex items-center gap-3 transition">
+        <span class="mi text-base w-5">skip_next</span> Play Next
+      </button>
+      <button @click="addToQueue(trackMenu,'last');closeTrackMenu()" class="w-full text-left text-sm px-4 py-3 rounded-xl hover:bg-slate-800 flex items-center gap-3 transition">
+        <span class="mi text-base w-5">playlist_add</span> Add to Queue
+      </button>
+      <button @click="closeTrackMenu();openAdd(trackMenu)" class="w-full text-left text-sm px-4 py-3 rounded-xl hover:bg-slate-800 flex items-center gap-3 transition">
+        <span class="mi text-base w-5">queue_music</span> Add to Playlist
+      </button>
+      <button v-if="s.custom[s.activeList]&&s.custom[s.activeList].includes(trackMenu)" @click="removeFromActiveList(trackMenu);closeTrackMenu()" class="w-full text-left text-sm px-4 py-3 rounded-xl hover:bg-slate-800 flex items-center gap-3 transition text-rose-400">
+        <span class="mi text-base w-5">remove_circle</span> Remove from List
+      </button>
+      <button @click="toggleFav(trackMenu);closeTrackMenu()" class="w-full text-left text-sm px-4 py-3 rounded-xl hover:bg-slate-800 flex items-center gap-3 transition" :class="s.favorites.includes(trackMenu)?'text-rose-400':'text-slate-200'">
+        <span class="mi text-base w-5">favorite</span>
+        <span v-text="s.favorites.includes(trackMenu)?'Unlove':'Love'"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== QUEUE PANEL ===== -->
+  <div v-if="showQueue" class="fixed inset-0 z-50 bg-black/50 flex items-end sm:items-center justify-center" @click.self="showQueue=false">
+    <div class="w-full sm:w-96 bg-slate-900 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl p-5 gl modal-in" @click.stop>
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-[15px] font-semibold text-slate-300">Up Next <span class="text-slate-500 text-sm font-normal" v-text="'('+s.queue.length+')'"></span></h3>
+        <button v-if="s.queue.length" @click="clearQueue()" class="text-xs text-rose-400 hover:text-rose-300 transition px-2 py-1">Clear all</button>
+      </div>
+      <div v-if="s.queue.length" class="max-h-80 overflow-y-auto space-y-1">
+        <div v-for="(qId,i) in s.queue" :key="qId" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800/60 transition group">
+          <span class="text-xs text-slate-500 w-5 text-right shrink-0" v-text="i+1"></span>
+          <div class="min-w-0 flex-1 cursor-pointer" @click="playFromQueue(i);showQueue=false">
+            <div class="text-sm truncate text-slate-200" v-text="(getTrack(qId)||{}).name||'Unknown'"></div>
+            <div class="text-xs text-slate-500 truncate" v-text="(getTrack(qId)||{}).genre||''"></div>
+          </div>
+          <button @click="moveInQueue(i,Math.max(0,i-1))" :disabled="i===0" class="text-slate-600 hover:text-white disabled:opacity-20 text-sm px-1">▲</button>
+          <button @click="moveInQueue(i,Math.min(s.queue.length-1,i+1))" :disabled="i===s.queue.length-1" class="text-slate-600 hover:text-white disabled:opacity-20 text-sm px-1">▼</button>
+          <button @click="removeFromQueue(i)" class="text-slate-600 hover:text-rose-400 text-sm px-1 opacity-0 group-hover:opacity-100 transition">✕</button>
+        </div>
+      </div>
+      <div v-else class="text-center text-slate-500 py-10 text-sm">Queue is empty.<br>Long-press a track to add it.</div>
+    </div>
+  </div>
+
+  <!-- ===== LOAD / WELCOME MODAL ===== -->
+  <div v-if="s.loadModal" class="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6 text-center gl modal-in">
+      <div class="text-6xl mb-3">♪</div>
+      <h3 class="text-2xl font-bold mb-1">Melody</h3>
+      <p class="text-[15px] text-slate-400 mb-5">Open your music folder to auto-detect tracks, genres, and playlists.</p>
+      <div class="flex flex-col gap-2">
+        <button @click="openFolder()" class="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:opacity-90 text-slate-950 font-semibold text-[15px] px-4 py-3 rounded-xl transition active:scale-[0.98]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18"/></svg>
+          Open Music Folder
+        </button>
+        <label class="w-full flex justify-center items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-3 rounded-xl cursor-pointer transition active:scale-[0.98] text-[15px]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          Select MP3 Files
+          <input type="file" accept="audio/mpeg,.mp3" multiple class="hidden" @change="loadFilesFallback($event)" />
+        </label>
+      </div>
+      <p v-if="s.fallback" class="text-sm text-amber-400/70 mt-3">Your browser lacks the File System Access API. Folder view & genre moves require Chrome/Edge.</p>
+    </div>
+  </div>
+
+  <!-- ===== LOGIN / PROFILE POPUP ===== -->
+  <div v-if="showLogin" class="fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center" @click.self="showLogin=false">
+    <div class="w-full sm:w-80 bg-slate-900 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl p-5 gl modal-in" @click.stop>
+      <!-- Mode: Profile (logged in) -->
+      <template v-if="user.loggedIn">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-indigo-600 grid place-items-center text-white font-bold" v-text="(user.name[0]||'?').toUpperCase()"></div>
+          <div>
+            <div class="text-sm font-semibold" v-text="user.name"></div>
+            <div class="text-xs text-slate-500" v-text="user.email || user.id"></div>
+          </div>
+        </div>
+        <div class="text-xs text-slate-500 mb-3">User ID: <span class="text-slate-300" v-text="user.id"></span></div>
+        <button @click="logoutUser(); showLogin=false" class="w-full bg-slate-800 hover:bg-slate-700 text-sm py-2.5 rounded-xl transition">Logout</button>
+      </template>
+
+      <!-- Mode: Sign In (account exists, not logged in) -->
+      <template v-else-if="userHasAccount">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="mi text-cyan-400 text-2xl">login</span>
+          <span class="text-base font-semibold">Sign in</span>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <div class="text-xs text-slate-500 mb-1">User ID</div>
+            <input v-model="user.id" @input="loginError=''" placeholder="Your user ID" class="w-full bg-slate-800 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700 focus:border-cyan-500" />
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 mb-1">Password</div>
+            <input v-model="user.pass" @input="loginError=''" type="password" placeholder="Password" class="w-full bg-slate-800 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700 focus:border-cyan-500" @keydown.enter="loginUser()" />
+          </div>
+          <div v-if="loginError" class="text-xs text-rose-400" v-text="loginError"></div>
+        </div>
+        <div class="flex gap-2 mt-4">
+          <button @click="user.id='';user.pass='';user.name='';user.email='';showLogin=false" class="flex-1 bg-slate-800 hover:bg-slate-700 text-sm py-2.5 rounded-xl transition">Cancel</button>
+          <button @click="loginError='';loginUser()" :disabled="!user.id.trim()||!user.pass.trim()" class="flex-1 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:opacity-90 text-slate-950 font-semibold text-sm py-2.5 rounded-xl transition disabled:opacity-40">Sign In</button>
+        </div>
+      </template>
+
+      <!-- Mode: Register (no account yet) -->
+      <template v-else>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="mi text-cyan-400 text-2xl">person_add</span>
+          <span class="text-base font-semibold">Create account</span>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <div class="text-xs text-slate-500 mb-1">Name</div>
+            <input v-model="user.name" placeholder="Your name" class="w-full bg-slate-800 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700 focus:border-cyan-500" />
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 mb-1">Email</div>
+            <input v-model="user.email" placeholder="email@example.com" type="email" class="w-full bg-slate-800 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700 focus:border-cyan-500" />
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 mb-1">User ID *</div>
+            <input v-model="user.id" placeholder="Choose a user ID" class="w-full bg-slate-800 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700 focus:border-cyan-500" />
+          </div>
+          <div>
+            <div class="text-xs text-slate-500 mb-1">Password *</div>
+            <input v-model="user.pass" type="password" placeholder="Choose a password" class="w-full bg-slate-800 text-[15px] rounded-xl px-4 py-3 outline-none border border-slate-700 focus:border-cyan-500" @keydown.enter="saveUser(); showLogin=false" />
+          </div>
+        </div>
+        <div class="flex gap-2 mt-4">
+          <button @click="showLogin=false" class="flex-1 bg-slate-800 hover:bg-slate-700 text-sm py-2.5 rounded-xl transition">Cancel</button>
+          <button @click="saveUser(); showLogin=false" :disabled="!user.id.trim()||!user.pass.trim()" class="flex-1 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:opacity-90 text-slate-950 font-semibold text-sm py-2.5 rounded-xl transition disabled:opacity-40">Create Account</button>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS MODAL ===== -->
+  <div v-if="showSettings" class="fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center" @click.self="showSettings=false">
+    <div class="w-full sm:w-80 bg-slate-900 border border-slate-700 rounded-t-2xl sm:rounded-2xl shadow-2xl p-5 gl modal-in">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="mi text-cyan-400">settings</span>
+        <span class="text-base font-semibold">Settings</span>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <div class="text-xs text-slate-500 mb-2 flex items-center gap-2">
+            <span class="mi text-base">palette</span> Theme
+          </div>
+          <button @click="cycleTheme()" class="flex items-center gap-2 w-full bg-slate-800 hover:bg-slate-700 text-sm px-4 py-2.5 rounded-xl transition">
+            <span class="mi" :class="s.theme==='system'?'text-cyan-400':'text-slate-400'">brightness_auto</span>
+            <span v-text="s.theme==='system'?'System':s.theme==='light'?'Light':'Dark'"></span>
+            <span class="ml-auto text-xs text-slate-500">Tap to switch</span>
+          </button>
+        </div>
+        <div>
+          <div class="text-xs text-slate-500 mb-2 flex items-center gap-2">
+            <span class="mi text-base">volume_up</span> Volume
+          </div>
+          <input type="range" class="rg w-full" min="0" max="1" step="0.01" v-model.number="s.volume" @input="applyVolume()" />
+        </div>
+        <div>
+          <div class="text-xs text-slate-500 mb-2 flex items-center gap-2">
+            <span class="mi text-base">sort</span> Sort
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <button @click="sortBy('name')" :class="s.sortKey==='name'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-1.5 rounded-lg border transition">Name <span v-if="s.sortKey==='name'" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+            <button @click="sortBy('genre')" :class="s.sortKey==='genre'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-1.5 rounded-lg border transition">Genre <span v-if="s.sortKey==='genre'" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+            <button @click="sortBy('lang')" :class="s.sortKey==='lang'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-1.5 rounded-lg border transition">Lang <span v-if="s.sortKey==='lang'" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+            <button @click="sortBy('duration')" :class="s.sortKey==='duration'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-1.5 rounded-lg border transition">Time <span v-if="s.sortKey==='duration'" v-text="s.sortDir===1?'▲':'▼'"></span></button>
+            <button @click="sortBy('default')" :class="s.sortKey==='default'?'bg-cyan-500/20 text-cyan-300 border-cyan-500/40':'bg-slate-800 text-slate-400 border-slate-700/40'" class="text-xs px-3 py-1.5 rounded-lg border transition">Default</button>
+          </div>
+        </div>
+        <div class="border-t border-slate-700/60 pt-3">
+          <div class="text-xs text-slate-500 flex items-center gap-2 mb-1">
+            <span class="mi text-base">info</span> About
+          </div>
+          <p class="text-sm text-slate-400">Melody v1.0</p>
+          <p class="text-xs text-slate-500" v-text="s.tracks.length+' tracks loaded'"></p>
+        </div>
+      </div>
+      <button @click="showSettings=false" class="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-sm py-2 rounded-xl transition">Close</button>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div v-if="s.toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 z-50 bg-slate-900 border border-slate-700 text-[15px] px-5 py-3 rounded-xl shadow-2xl gl toast-in" v-text="s.toast"></div>
+
+  <!-- ===== MOBILE MINI-PLAYER + TAB BAR ===== -->
+  <div class="fixed bottom-0 inset-x-0 z-40 bg-slate-950 border-t border-slate-800/80">
+    <div class="flex items-center gap-3 px-4 py-3 active:bg-slate-900/50 transition" @click="tabNow()">
+      <div class="w-10 h-10 rounded-full grid place-items-center text-white/80 shrink-0 text-lg overflow-hidden disc" :class="s.isPlaying?'th-spin':''" :style="thumbBg(current?.name)">♫</div>
+      <div class="min-w-0 flex-1">
+        <div class="text-[15px] font-medium truncate" v-text="current?current.name:'Nothing playing'"></div>
+        <div class="text-xs text-slate-500 truncate" v-text="current?current.genre:'Tap to browse & play'"></div>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button @click.stop="prev()" class="w-8 h-8 grid place-items-center text-slate-400 hover:text-white transition text-lg">⏮</button>
+        <button @click.stop="showQueue=true" class="w-8 h-8 grid place-items-center text-slate-400 hover:text-cyan-300 transition relative">
+          <span class="mi text-lg">queue_music</span>
+          <span v-if="s.queue.length" class="absolute -top-0.5 -right-0.5 text-[8px] bg-cyan-500 text-slate-950 rounded-full w-3.5 h-3.5 grid place-items-center font-bold" v-text="s.queue.length"></span>
+        </button>
+        <button @click.stop="togglePlay()" class="w-10 h-10 shrink-0 rounded-full bg-cyan-500 text-slate-950 grid place-items-center active:scale-90 transition pp" :class="s.isPlaying?'is-pg':''">
+          <svg v-show="!s.isPlaying" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg v-show="s.isPlaying" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+        </button>
+        <button @click.stop="next()" class="w-8 h-8 grid place-items-center text-slate-400 hover:text-white transition text-lg">⏭</button>
+        <button @click.stop="stopPlayback()" class="w-8 h-8 grid place-items-center text-slate-500 hover:text-rose-400 transition text-lg" title="Stop"><svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg></button>
+      </div>
+    </div>
+    <nav class="flex justify-around items-stretch text-[10px] border-t border-slate-800/60 bg-slate-950">
+      <button @click="tabTracks()" class="flex-1 py-1.5 flex flex-col items-center gap-0 transition" :class="mobileTab==='tracks'?'text-cyan-400':'text-slate-500'">
+        <span class="mi" :class="mobileTab==='tracks'?'':'opacity-60'">music_note</span><span>Music</span>
+        <span v-if="mobileTab==='tracks'" class="w-5 h-0.5 rounded-full bg-cyan-400"></span>
+        <span v-else class="w-5 h-0.5"></span>
+      </button>
+      <button @click="tabPlaylists()" class="flex-1 py-1.5 flex flex-col items-center gap-0 transition" :class="mobileTab==='playlists'?'text-cyan-400':'text-slate-500'">
+        <span class="mi" :class="mobileTab==='playlists'?'':'opacity-60'">playlist_play</span><span>Playlists</span>
+        <span v-if="mobileTab==='playlists'" class="w-5 h-0.5 rounded-full bg-cyan-400"></span>
+        <span v-else class="w-5 h-0.5"></span>
+      </button>
+      <button @click="tabSearch()" class="flex-1 py-1.5 flex flex-col items-center gap-0 transition" :class="mobileTab==='search'?'text-cyan-400':'text-slate-500'">
+        <span class="mi" :class="mobileTab==='search'?'':'opacity-60'">search</span><span>Search</span>
+        <span v-if="mobileTab==='search'" class="w-5 h-0.5 rounded-full bg-cyan-400"></span>
+        <span v-else class="w-5 h-0.5"></span>
+      </button>
+      <button @click="tabFav()" class="flex-1 py-1.5 flex flex-col items-center gap-0 transition" :class="mobileTab==='favorites'?'text-cyan-400':'text-slate-500'">
+        <span class="mi" :class="mobileTab==='favorites'?'':'opacity-60'">favorite</span><span>Fav</span>
+        <span v-if="mobileTab==='favorites'" class="w-5 h-0.5 rounded-full bg-cyan-400"></span>
+        <span v-else class="w-5 h-0.5"></span>
+      </button>
+      <button @click="tabNow()" class="flex-1 py-1.5 flex flex-col items-center gap-0 transition" :class="mobileTab==='now'?'text-cyan-400':'text-slate-500'">
+        <span class="mi" :class="mobileTab==='now'?'':'opacity-60'">graphic_eq</span><span>Now</span>
+        <span v-if="mobileTab==='now'" class="w-5 h-0.5 rounded-full bg-cyan-400"></span>
+        <span v-else class="w-5 h-0.5"></span>
+      </button>
+    </nav>
+  </div>
+</div>
+
+<script>
+const { createApp, reactive, ref, computed, onMounted } = Vue;
+const GENRE_ORDER = ['Blazing','Cosmic','Ethereal','Dark','Folk','Epic','Cinematic','Futuristic','Nostalgic','Mutation','Dreamwave','Trap','Indie','Poetry','Orchestra','Ballad','Electropop','Female','Male','Duet','Rock','Pop','Remix','House','Rabindra','Robindro','Rabindro','Bw-pop','Boly-pop','Blue Rocker','Korean OST'];
+function detectGenre(name){
+  const n=name.toLowerCase().replace(/\.mp3$/,'');
+      for(const g of GENRE_ORDER){if(n.includes(g.toLowerCase())){if(g.startsWith('Rab'))return'Rabindra';if(g==='Electropop')return'Electropop';return g;}}
+  const lang=detectLang(name);
+  if(lang==='BN')return'Ballad';
+  if(lang==='HI')return'Ballad';
+  if(lang==='KO')return'Korean OST';
+  if(lang==='ZH'||lang==='JA')return'Pop';
+  return'Pop';
+}
+function detectLang(name){
+  if(!name||typeof name!=='string')return'EN';
+  if(/[\u0980-\u09FF]/.test(name))return'BN';
+  if(/[\u0900-\u097F]/.test(name))return'HI';
+  if(/[\u0600-\u06FF]/.test(name))return'AR';
+  if(/[\u4E00-\u9FFF]/.test(name))return'ZH';
+  if(/[\u3040-\u309F\u30A0-\u30FF]/.test(name))return'JA';
+  if(/[\uAC00-\uD7AF]/.test(name))return'KO';
+  if(/[\u0400-\u04FF]/.test(name))return'RU';
+  return'EN';
+}
+
+// Base URL for API server — change this to host frontend and backend on different domains
+// Leave empty ('') for same-origin hosting (default local setup)
+// Example: const API_URL = 'http://192.168.1.5:8000';
+// For production: const API_URL = 'https://api.mydomain.com';
+const API_URL = '';
+
+const DB_NAME = 'vue_music_player';
+async function dbGet(id, fallback) { try { return await (new PouchDB(DB_NAME)).get(id); } catch(e) { return null; } }
+async function dbPut(doc) { try { const db = new PouchDB(DB_NAME); const existing = await db.get(doc._id).catch(()=>null); if (existing) { doc._rev = existing._rev; } await db.put(doc); } catch(e){} }
+
+console.log('App mounting...');
+createApp({
+  setup(){
+    console.log('Vue setup() running');
+    const s = reactive({
+      tracks: [], genres: {}, langs: {}, custom: {}, favorites: [],
+      activeList: 'All', currentId: null, isPlaying: false,
+      currentTime: 0, duration: 0, volume: 0.9,
+      shuffle: false, repeat: 'off', search: '', sortKey: 'default', sortDir: 1,
+      loadModal: true, fallback: false, busy: false, scanning: false,
+      organizePreview: null, toast: '', rootHandle: null, theme: 'system', queue: [],
+    });
+    const audio = ref(null);
+    const seeking = ref(false);
+    const filterOpen = ref(null);
+    const sortOpen = ref(null);
+    const dropdownStyle = ref({});
+    const showCreate = ref(false);
+    const newCustom = ref('');
+    const newCustom2 = ref('');
+    const addMenu = ref(null);
+    const isMobile = ref(false);
+    const mobileTab = ref('tracks');
+    const playlistTab = ref('favorites');
+    const currentPlayStats = ref(null);
+    const expandGenres = ref(true);
+    const sidebarOpen = ref(false);
+    const showSettings = ref(false);
+    const showLogin = ref(false);
+    const loginError = ref('');
+    const user = reactive({ name: '', email: '', id: '', pass: '', loggedIn: false });
+    const userHasAccount = computed(()=> !!user.id);
+    (function(){ try{const mq=window.matchMedia('(max-width:767px)');const s=()=>isMobile.value=mq.matches;s();(mq.addEventListener?mq.addEventListener('change',s):mq.addListener(s));}catch(e){} })();
+
+    const current = computed(()=> s.tracks.find(t=>t.id===s.currentId) || null);
+    const genreList = computed(()=> Object.keys(s.genres).sort((a,b)=>s.genres[b].length-s.genres[a].length));
+    const langList = computed(()=> Object.keys(s.langs).sort((a,b)=>s.langs[b].length-s.langs[a].length));
+    const customList = computed(()=> Object.keys(s.custom));
+    const addTargets = computed(()=> ['Favorites', ...customList.value.filter(c=>c!=='Favorites')]);
+    const allFav = computed(()=> s.tracks.length>0 && s.tracks.every(t=>s.favorites.includes(t.id)));
+    const activeGenre = computed(()=> genreList.value.includes(s.activeList) ? s.activeList : null);
+    const activeLang = computed(()=> langList.value.includes(s.activeList) ? s.activeList : null);
+    const activePlaylist = computed(()=> s.activeList==='Favorites' || customList.value.includes(s.activeList) ? s.activeList : null);
+    const sortLabel = computed(() => {
+      const labels = { name: 'Name', genre: 'Genre', lang: 'Lang', duration: 'Time', default: 'Default' };
+      const label = labels[s.sortKey] || 'Default';
+      if (s.sortKey === 'default') return label;
+      return label + ' ' + (s.sortDir === 1 ? '▲' : '▼');
+    });
+    const visibleTracks = computed(()=>{
+      let ids;
+      if (s.activeList==='All') ids=s.tracks.map(t=>t.id);
+      else if (s.activeList==='Favorites') ids=s.favorites;
+      else ids=(s.genres[s.activeList]||s.custom[s.activeList]||s.langs[s.activeList]||[]);
+      let list=ids.map(i=>s.tracks.find(t=>t.id===i)).filter(Boolean);
+      const q=s.search.trim().toLowerCase(); if(q) list=list.filter(t=>t.name.toLowerCase().includes(q));
+      if(s.sortKey!=='default'){const d=s.sortDir;list=list.slice().sort((a,b)=>{if(s.sortKey==='name')return d*a.name.toLowerCase().localeCompare(b.name.toLowerCase());if(s.sortKey==='genre')return d*a.genre.toLowerCase().localeCompare(b.genre.toLowerCase());if(s.sortKey==='lang')return d*a.lang.localeCompare(b.lang);if(s.sortKey==='duration')return d*((a.duration||0)-(b.duration||0));return 0;});}
+      return list;
+    });
+
+    const trackMenu = ref(null);
+    const suppressClick = ref(false);
+    let pressTimer = null;
+    const showQueue = ref(false);
+
+    function getTrack(id){ return s.tracks.find(t=>t.id===id); }
+    function fmt(sec){ if(!sec||isNaN(sec))return'0:00';const m=Math.floor(sec/60),x=Math.floor(sec%60);return m+':'+String(x).padStart(2,'0'); }
+    function toast(m){ s.toast=m;setTimeout(()=>{if(s.toast===m)s.toast='';},2600); }
+    function thumbBg(name){
+      if(!name)return'background:linear-gradient(135deg,#1e293b,#334155)';
+      let h=0;for(let i=0;i<name.length;i++)h=name.charCodeAt(i)+((h<<5)-h);
+      const h1=Math.abs(h%360),h2=(h1+45)%360;
+      return'background:linear-gradient(135deg,hsl('+h1+',55%,25%),hsl('+h2+',45%,18%))';
+    }
+
+    // POUCHDB persistence
+    async function loadDB(){
+      try {
+        const db = new PouchDB(DB_NAME);
+        try {
+          const d = await db.get('settings').catch(()=>null);
+          if (d) { s.volume = d.volume ?? 0.9; s.shuffle = d.shuffle ?? false; s.repeat = d.repeat ?? 'off'; s.sortKey = d.sortKey ?? 'default'; s.sortDir = d.sortDir ?? 1; s.theme = d.theme ?? 'system'; }
+        } catch(e){}
+        try {
+          const d = await db.get('playstate').catch(()=>null);
+          if (d) { s.currentId = d.currentId ?? null; s.activeList = d.activeList ?? 'All'; s.currentTime = d.currentTime ?? 0; s.duration = d.duration ?? 0; }
+        } catch(e){}
+        try {
+          const d = await db.get('favorites').catch(()=>null);
+          if (d) s.favorites = d.ids ?? [];
+        } catch(e){}
+        try {
+          const d = await db.get('playlists').catch(()=>null);
+          if (d) s.custom = d.lists ?? {};
+        } catch(e){}
+        try {
+          const d = await db.get('user').catch(()=>null);
+          if (d) { user.name = d.name ?? ''; user.email = d.email ?? ''; user.id = d.id ?? ''; user.pass = d.pass ?? ''; user.loggedIn = !!d.loggedIn; }
+        } catch(e){}
+        try {
+          const d = await db.get('queue').catch(()=>null);
+          if (d) s.queue = d.ids ?? [];
+        } catch(e){}
+      } catch(e){}
+    }
+    async function saveUser(){
+      if (!user.id.trim()) { toast('Enter a User ID'); return; }
+      if (!user.pass.trim()) { toast('Enter a password'); return; }
+      const db = new PouchDB(DB_NAME);
+      const doc = { _id: 'user', name: user.name, email: user.email, id: user.id, pass: user.pass, loggedIn: true };
+      try { const ex = await db.get('user'); doc._rev = ex._rev; } catch(e){} try { await db.put(doc); } catch(e){} user.loggedIn = true; pushToServer();
+    }
+    async function loginUser(){
+      if (!user.id.trim() || !user.pass.trim()) { loginError.value = 'Enter ID and password'; return; }
+      const db = new PouchDB(DB_NAME);
+      const d = await db.get('user').catch(()=>null);
+      if (!d) { loginError.value = 'No account found'; return; }
+      if (d.id !== user.id || d.pass !== user.pass) { loginError.value = 'Wrong ID or password'; return; }
+      user.name = d.name ?? ''; user.email = d.email ?? ''; user.loggedIn = true;
+      const doc = { _id: 'user', name: user.name, email: user.email, id: user.id, pass: user.pass, loggedIn: true, _rev: d._rev };
+      try { await db.put(doc); } catch(e){} pushToServer(); showLogin.value = false;
+    }
+    async function logoutUser(){ user.name=''; user.email=''; user.id=''; user.pass=''; user.loggedIn=false; const db=new PouchDB(DB_NAME); try { await db.remove(await db.get('user')); } catch(e){} }
+
+    // Server sync
+    async function pushToServer(){
+      try {
+        const db = new PouchDB(DB_NAME);
+        const [settings, favs, lists, usr, queue] = await Promise.all([
+          db.get('settings').catch(()=>null),
+          db.get('favorites').catch(()=>null),
+          db.get('playlists').catch(()=>null),
+          db.get('user').catch(()=>null),
+          db.get('queue').catch(()=>null),
+        ]);
+        const payload = {};
+        if (settings) payload.settings = settings;
+        if (favs) payload.favorites = favs;
+        if (lists) payload.playlists = lists;
+        if (usr) payload.user = usr;
+        if (queue) payload.queue = queue;
+        await fetch(API_URL + '/api/sync', { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      } catch(e){} // silent fail if offline
+    }
+    async function pullFromServer(){
+      try {
+        const r = await fetch(API_URL + '/api/sync');
+        if (!r.ok) return;
+        const data = await r.json();
+        const db = new PouchDB(DB_NAME);
+        if (data.settings) { try { const ex = await db.get('settings'); data.settings._rev = ex._rev; } catch(e){} await db.put(data.settings).catch(()=>{}); }
+        if (data.favorites) { try { const ex = await db.get('favorites'); data.favorites._rev = ex._rev; } catch(e){} await db.put(data.favorites).catch(()=>{}); }
+        if (data.playlists) { try { const ex = await db.get('playlists'); data.playlists._rev = ex._rev; } catch(e){} await db.put(data.playlists).catch(()=>{}); }
+        if (data.user) { try { const ex = await db.get('user'); data.user._rev = ex._rev; } catch(e){} await db.put(data.user).catch(()=>{}); }
+        if (data.queue) { try { const ex = await db.get('queue'); data.queue._rev = ex._rev; } catch(e){} await db.put(data.queue).catch(()=>{}); }
+        // re-read local state
+        await loadDB();
+      } catch(e){}
+    }
+
+    async function saveSettings(){
+      const db = new PouchDB(DB_NAME);
+      const doc = { _id: 'settings', volume: s.volume, shuffle: s.shuffle, repeat: s.repeat, sortKey: s.sortKey, sortDir: s.sortDir, theme: s.theme };
+      try { const ex = await db.get('settings'); doc._rev = ex._rev; } catch(e){} try { await db.put(doc); } catch(e){} pushToServer();
+    }
+    async function saveFavs(){
+      const db = new PouchDB(DB_NAME);
+      const doc = { _id: 'favorites', ids: s.favorites };
+      try { const ex = await db.get('favorites'); doc._rev = ex._rev; } catch(e){} try { await db.put(doc); } catch(e){} pushToServer();
+    }
+    async function savePlaylists(){
+      const db = new PouchDB(DB_NAME);
+      const doc = { _id: 'playlists', lists: s.custom };
+      try { const ex = await db.get('playlists'); doc._rev = ex._rev; } catch(e){} try { await db.put(doc); } catch(e){} pushToServer();
+    }
+    async function saveQueue(){
+      try{const db = new PouchDB(DB_NAME);
+      const doc = { _id: 'queue', ids: s.queue };
+      try { const ex = await db.get('queue'); doc._rev = ex._rev; } catch(e){} try { await db.put(doc); } catch(e){} pushToServer();}catch(e){}
+    }
+    async function savePlayState(){
+      try{const db = new PouchDB(DB_NAME);
+      const doc = { _id: 'playstate', currentId: s.currentId, activeList: s.activeList, currentTime: s.currentTime, duration: s.duration };
+      try { const ex = await db.get('playstate'); doc._rev = ex._rev; } catch(e){} try { await db.put(doc); } catch(e){}}catch(e){}
+    }
+    function restorePlayState(){
+      if(!audio.value)return;
+      const t = getTrack(s.currentId);
+      if (!t) { s.currentId = null; s.currentTime = 0; s.duration = 0; return; }
+      try{
+        audio.value.src = t.url;
+        const handler = () => {
+          if (s.currentTime > 0 && s.currentTime < (s.duration || Infinity)) {
+            audio.value.currentTime = Math.min(s.currentTime, (s.duration || 0) - 1);
+          }
+        };
+        if (audio.value.readyState >= 1) handler();
+        else audio.value.addEventListener('loadedmetadata', handler, { once: true });
+      }catch(e){}
+    }
+    async function trackPlayed(id){
+      try{const db = new PouchDB(DB_NAME);
+      let doc = await db.get('track_stats').catch(()=>null);
+      if (!doc) doc = { _id: 'track_stats', counts: {} };
+      if (!doc.counts) doc.counts = {};
+      if (!doc.counts[id]) doc.counts[id] = { plays: 0, lastPlayed: null };
+      doc.counts[id].plays++; doc.counts[id].lastPlayed = Date.now();
+      try { await db.put(doc); } catch(e){}
+      currentPlayStats.value = doc.counts[id];}catch(e){}
+    }
+
+    function rebuildGenres(){
+      const g = {};
+      for (const t of s.tracks){ (g[t.genre] = g[t.genre]||[]).push(t.id); }
+      s.genres = g;
+      const l = {};
+      for (const t of s.tracks){ (l[t.lang] = l[t.lang]||[]).push(t.id); }
+      s.langs = l;
+    }
+    async function readMeta(t){ try{const a=new Audio();a.preload='metadata';a.src=t.url;await new Promise((rs,rj)=>{a.addEventListener('loadedmetadata',rs,{once:true});a.addEventListener('error',rj,{once:true});});t.duration=a.duration;}catch(e){} }
+    async function readMetaAll(tracks, concurrency){
+      const limit=concurrency||6;let i=0;
+      async function next(){if(i>=tracks.length)return;const t=tracks[i++];await readMeta(t);await next();}
+      await Promise.all(Array.from({length:limit},next));
+    }
+    async function scan(handle){
+      s.scanning=true;for(const t of s.tracks){if(t.url&&t.url.startsWith('blob:'))URL.revokeObjectURL(t.url);}s.tracks=[];const found=[];
+      async function walk(dir){ for await (const[n,e] of dir){if(e.kind==='file'){if(/\.mp3$/i.test(n)){const f=await e.getFile();const id=n+'::'+f.size;if(!found.some(x=>x.id===id))found.push({id,name:n.replace(/\.mp3$/i,''),file:f,handle:e,url:URL.createObjectURL(f),duration:0,genre:detectGenre(n),lang:detectLang(n)});}}else if(e.kind==='directory'){await walk(e);}}}
+      await walk(handle); s.tracks=found; rebuildGenres(); await readMetaAll(found); s.scanning=false;
+    }
+
+    // LOADING
+    async function openFolder(){
+      if(!('showDirectoryPicker' in window)){s.fallback=true;s.loadModal=true;toast('Folder access needs Chrome/Edge');return;}
+      try{const h=await window.showDirectoryPicker();await idbSet('rootHandle',h);s.rootHandle=h;s.loadModal=false;await scan(h);restorePlayState();toast('Loaded '+s.tracks.length+' tracks');if(!s.tracks.length)toast('No MP3 files found');}catch(e){if(e.name!=='AbortError')toast('Could not open folder');}
+    }
+    async function loadFilesFallback(e){
+      const files=Array.from(e.target.files||[]).filter(f=>/\.mp3$/i.test(f.name));
+      const found=s.tracks.slice();
+      for(const f of files){const id=f.name+'::'+f.size;if(!found.some(t=>t.id===id))found.push({id,name:f.name.replace(/\.mp3$/i,''),file:f,handle:null,url:URL.createObjectURL(f),duration:0,genre:detectGenre(f.name),lang:detectLang(f.name)});}
+      s.tracks=found;rebuildGenres();await readMetaAll(found);s.loadModal=false;e.target.value='';toast('Loaded '+s.tracks.length+' tracks');restorePlayState();
+    }
+    async function refreshTracks(){
+      if (s.loadModal) return;
+      try {
+        const r = await fetch(API_URL + '/api/tracks');
+        if (!r.ok) return;
+        const items = await r.json();
+        const existing = new Set(s.tracks.map(t=>t.rel || t.id));
+        const fresh = items.filter(it => !existing.has(it.rel)).map(it => ({
+          id: it.rel, name: it.name.replace(/\.mp3$/i,''),
+          file: null, handle: null, rel: it.rel,
+          url: API_URL + it.rel, duration: 0, genre: detectGenre(it.name), lang: detectLang(it.name),
+        }));
+        if (!fresh.length) return;
+        for (const t of fresh) s.tracks.push(t);
+        rebuildGenres(); await readMetaAll(fresh);
+        toast('Found ' + fresh.length + ' new track(s)');
+      } catch(e){}
+    }
+
+    // PLAYBACK
+    function updateMediaSession(track){
+      if(!('mediaSession' in navigator)||!track)return;
+      navigator.mediaSession.metadata=new MediaMetadata({title:track.name,artist:track.genre||'Unknown',album:'AI Music',artwork:[{src:'',sizes:'512x512',type:'image/png'}]});
+      navigator.mediaSession.setActionHandler('play',()=>togglePlay());
+      navigator.mediaSession.setActionHandler('pause',()=>togglePlay());
+      navigator.mediaSession.setActionHandler('nexttrack',()=>next());
+      navigator.mediaSession.setActionHandler('previoustrack',()=>prev());
+      navigator.mediaSession.setActionHandler('seekforward',()=>{if(audio.value)audio.value.currentTime=Math.min((audio.value.currentTime||0)+10,(s.duration||0));});
+      navigator.mediaSession.setActionHandler('seekbackward',()=>{if(audio.value)audio.value.currentTime=Math.max((audio.value.currentTime||0)-10,0);});
+      navigator.mediaSession.setActionHandler('stop',()=>stopPlayback());
+    }
+    function playTrack(id){
+      const t=getTrack(id);if(!t)return;s.currentId=id;
+      if(!audio.value){console.error('audio ref not mounted');return;}
+      updateMediaSession(t);
+      try{
+        if(audio.value.src!==t.url)audio.value.src=t.url;
+        audio.value.play().catch(e=>{console.error('play() failed:',e);toast('Playback error');});
+      }catch(e){console.error('playTrack error:',e);}
+      trackPlayed(id); savePlayState();
+    }
+    function playList(){if(visibleTracks.value.length)playTrack(visibleTracks.value[0].id);}
+    function togglePlay(){if(!audio.value)return;if(!s.currentId){if(visibleTracks.value.length)playTrack(visibleTracks.value[0].id);return;}if(audio.value.paused)audio.value.play().catch(()=>{});else audio.value.pause();}
+    function listOfIds(){return visibleTracks.value.map(t=>t.id);}
+    function next(){
+      if(!audio.value)return;
+      if(s.queue.length){playTrack(s.queue.shift());saveQueue();return;}
+      const ids=listOfIds();if(!ids.length)return;
+      if(s.shuffle){playTrack(ids[Math.floor(Math.random()*ids.length)]);return;}
+      let i=ids.indexOf(s.currentId);playTrack(ids[(i+1)%ids.length]);
+    }
+    function prev(){
+      if(!audio.value)return;
+      if(audio.value.currentTime>3){audio.value.currentTime=0;return;}
+      const ids=listOfIds();if(!ids.length)return;let i=ids.indexOf(s.currentId);playTrack(ids[(i-1+ids.length)%ids.length]);
+    }
+    function onMeta(){if(audio.value){s.duration=audio.value.duration||0;savePlayState();}}
+    function onTime(){if(!seeking.value&&audio.value)s.currentTime=audio.value.currentTime||0;}
+    function onEnded(){if(!audio.value)return;if(s.repeat==='one'){audio.value.currentTime=0;audio.value.play().catch(()=>{});savePlayState();}else if(s.repeat==='all')next();else{s.isPlaying=false;savePlayState();}}
+    function onError(){if(!audio.value)return;console.error('Audio error:',audio.value.error?.message);toast('Playback error');const q=s.queue.length;if(s.repeat==='all'||q)next();else s.isPlaying=false;}
+    function onSeekInput(){ if(!seeking.value) seeking.value=true; }
+    function endSeek(){ if(!seeking.value||!audio.value) return; seeking.value=false; audio.value.currentTime=s.currentTime; savePlayState(); }
+    function applyVolume(){if(!audio.value)return;audio.value.volume=s.volume; saveSettings();}
+    const REPEAT_CYCLE = ['off','all','one'];
+    function cycleRepeat(){ s.repeat = REPEAT_CYCLE[(REPEAT_CYCLE.indexOf(s.repeat)+1)%3]; saveSettings(); }
+    const THEME_CYCLE = ['system','light','dark'];
+    function cycleTheme(){ s.theme = THEME_CYCLE[(THEME_CYCLE.indexOf(s.theme)+1)%3]; applyTheme(); saveSettings(); }
+    function applyTheme(){
+      if (s.theme==='light') { document.documentElement.setAttribute('data-s','light'); }
+      else if (s.theme==='dark') { document.documentElement.removeAttribute('data-s'); }
+      else {
+        if (window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('data-s','light');
+        else document.documentElement.removeAttribute('data-s');
+      }
+    }
+
+    function stopPlayback(){
+      if(!audio.value)return;
+      audio.value.pause();
+      audio.value.src='';
+      s.currentId=null;s.isPlaying=false;s.currentTime=0;s.duration=0;
+      savePlayState();
+      if('mediaSession' in navigator)navigator.mediaSession.metadata=null;
+    }
+    function seek(delta){
+      if(!audio.value||!s.currentId)return;
+      audio.value.currentTime=Math.max(0,Math.min((audio.value.currentTime||0)+delta,(s.duration||0)));
+    }
+    function closeAllModals(){
+      filterOpen.value=null;sortOpen.value=null;trackMenu.value=null;
+      showQueue.value=false;showSettings.value=false;showLogin.value=false;
+      showCreate.value=false;addMenu.value=null;s.organizePreview=null;
+    }
+    // FAVORITES / PLAYLISTS
+    function toggleFav(id){
+      const i=s.favorites.indexOf(id);
+      if(i>=0)s.favorites.splice(i,1);else s.favorites.push(id);
+      saveFavs();
+    }
+    function favoriteAll(){
+      const ids=s.tracks.map(t=>t.id);
+      if(ids.every(i=>s.favorites.includes(i)))s.favorites=[];else s.favorites=[...new Set([...s.favorites,...ids])];
+      saveFavs();
+    }
+    function selectList(n){ s.activeList = n; }
+    function openAdd(id){addMenu.value=id;newCustom2.value='';}
+    function addToPlaylist(name,id){
+      if(name==='Favorites'){
+        if(!s.favorites.includes(id))s.favorites.push(id);
+        addMenu.value=null;saveFavs();return;
+      }
+      if(!s.custom[name])s.custom[name]=[];
+      if(!s.custom[name].includes(id))s.custom[name].push(id);
+      addMenu.value=null;savePlaylists();
+    }
+    function createCustom(id){
+      const n=(newCustom.value||newCustom2.value||'').trim();if(!n)return;
+      if(!s.custom[n])s.custom[n]=[];if(id)addToPlaylist(n,id);
+      newCustom.value='';newCustom2.value='';showCreate.value=false;savePlaylists();
+    }
+
+    // TRACK MENU & QUEUE
+    function onTrackPress(e,id){
+      if(pressTimer)clearTimeout(pressTimer);
+      pressTimer=setTimeout(()=>{trackMenu.value=id;suppressClick.value=true;},450);
+    }
+    function onTrackRelease(){if(pressTimer){clearTimeout(pressTimer);pressTimer=null;}}
+    function onTrackMove(){onTrackRelease();}
+    function onTrackClick(id){if(suppressClick.value){suppressClick.value=false;return;}playTrack(id);}
+    function openTrackMenu(e,id){e.preventDefault();e.stopPropagation();trackMenu.value=id;}
+    function closeTrackMenu(){trackMenu.value=null;}
+    function addToQueue(id,mode){
+      if(mode==='now'){playTrack(id);return;}
+      if(mode==='next')s.queue.unshift(id);
+      else s.queue.push(id);
+      saveQueue();toast(mode==='next'?'Playing next':'Added to queue');
+    }
+    function removeFromQueue(i){s.queue.splice(i,1);saveQueue();}
+    function clearQueue(){s.queue=[];saveQueue();}
+    function playFromQueue(i){
+      const id=s.queue[i];s.queue.splice(i,1);saveQueue();
+      playTrack(id);
+    }
+    function moveInQueue(from,to){
+      if(to<0||to>=s.queue.length)return;
+      const[item]=s.queue.splice(from,1);s.queue.splice(to,0,item);saveQueue();
+    }
+    function removeFromActiveList(id){
+      if(!s.custom[s.activeList])return;
+      const i=s.custom[s.activeList].indexOf(id);
+      if(i>=0){s.custom[s.activeList].splice(i,1);savePlaylists();toast('Removed from '+s.activeList);}
+    }
+
+    // SORT
+    function sortBy(key){
+      if(s.sortKey===key)s.sortDir=s.sortDir===1?-1:1;else{s.sortKey=key;s.sortDir=1;}
+      saveSettings();
+    }
+    function toggleFilter(name, event){
+      const opening = filterOpen.value !== name;
+      filterOpen.value = opening ? name : null;
+      if (opening && event && event.currentTarget) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        dropdownStyle.value = {
+          top: (rect.bottom + 4) + 'px',
+          left: rect.left + 'px',
+        };
+      }
+    }
+    function toggleSort(event){
+      const opening = !sortOpen.value;
+      sortOpen.value = opening;
+      if (opening && event && event.currentTarget) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        dropdownStyle.value = {
+          top: (rect.bottom + 4) + 'px',
+          right: (window.innerWidth - rect.right) + 'px',
+        };
+      }
+    }
+    function selectFilter(name){
+      s.activeList = name; filterOpen.value = null;
+    }
+
+    // MOBILE TABS
+    function tabTracks(){mobileTab.value='tracks';s.activeList='All';}
+    function tabFav(){mobileTab.value='favorites';s.activeList='Favorites';}
+    function tabPlaylists(){mobileTab.value='playlists';}
+    function tabSearch(){mobileTab.value='search';}
+    function tabNow(){mobileTab.value='now';}
+    function pickPlaylist(n){s.activeList=n;mobileTab.value='tracks';}
+
+    // ORGANIZE
+    function organizePreview(){
+      const m={};for(const t of s.tracks){(m[t.genre]=m[t.genre]||[]).push(t.name);}
+      s.organizePreview=Object.keys(m).map(g=>({genre:g,count:m[g].length,samples:m[g].slice(0,3)}));
+    }
+    async function applyOrganize(){
+      if(!s.rootHandle){toast('No folder handle');return;}
+      s.busy=true;
+      try{for(const t of s.tracks){if(!t.handle)continue;const g=await s.rootHandle.getDirectoryHandle(t.genre,{create:true});try{await t.handle.move(g,t.file.name);}catch(err){}}await scan(s.rootHandle);s.organizePreview=null;toast('Organized into '+Object.keys(s.genres).length+' genre folders');}catch(e){toast('Organize failed: '+e.message);}
+      s.busy=false;
+    }
+
+    // IDB helpers for folder handle
+    const IDB='vue_music_handle';
+    async function idbGet(k){try{const r=indexedDB.open(IDB);return new Promise((res)=>{r.onsuccess=()=>{const d=r.result;if(!d.objectStoreNames.contains('h'))return res(null);const t=d.transaction('h','readonly').objectStore('h').get(k);t.onsuccess=()=>res(t.result?t.result.v:null);t.onerror=()=>res(null);};r.onupgradeneeded=()=>{r.result.createObjectStore('h');};r.onerror=()=>res(null);});}catch(e){return null}}
+    async function idbSet(k,v){try{const r=indexedDB.open(IDB);return new Promise((res)=>{r.onsuccess=()=>{const d=r.result;if(!d.objectStoreNames.contains('h'))d.createObjectStore('h');const t=d.transaction('h','readwrite').objectStore('h');t.put({v},k);t.oncomplete=()=>res();t.onerror=()=>res();};r.onupgradeneeded=()=>{r.result.createObjectStore('h');};r.onerror=()=>res();});}catch(e){}}
+
+    async function tryLoadEmbedded(){
+      try{
+        if(window.__EMBEDDED_SONGS__&&window.__EMBEDDED_SONGS__.length){
+          s.tracks=window.__EMBEDDED_SONGS__.map(it=>({id:it.id,name:it.name,url:it.url,file:null,handle:null,duration:0,genre:detectGenre(it.name||it.url),lang:detectLang(it.name||it.url)}));
+          rebuildGenres();s.loadModal=false;toast('Loaded '+s.tracks.length+' tracks');
+          await readMetaAll(s.tracks);restorePlayState();return true;
+        }
+      }catch(e){console.error('tryLoadEmbedded failed:',e);}
+      return false;
+    }
+
+    async function tryLoadSongsJSON(){
+      try{
+        const r=await fetch('./songs.json');
+        if(!r.ok)return false;
+        const items=await r.json();
+        if(!items||!items.length)return false;
+        s.tracks=items.map(it=>({id:it.id,name:it.name,url:it.url,file:null,handle:null,duration:0,genre:detectGenre(it.name||it.url),lang:detectLang(it.name||it.url)}));
+        rebuildGenres();s.loadModal=false;toast('Loaded '+s.tracks.length+' tracks');
+        await readMetaAll(s.tracks);restorePlayState();return true;
+      }catch(e){return false;}
+    }
+
+    onMounted(async ()=>{
+      try{
+        console.log('onMounted started');
+        applyTheme();
+        window.matchMedia('(prefers-color-scheme:light)').addEventListener('change',()=>{if(s.theme==='system')applyTheme();});
+        if(await tryLoadEmbedded()){
+          try{await loadDB();}catch(e){}
+          restorePlayState();
+          console.log('onMounted completed (embedded)');
+          return;
+        }
+        if(await tryLoadSongsJSON()){
+          try{await loadDB();}catch(e){}
+          restorePlayState();
+          console.log('onMounted completed (songs.json)');
+          return;
+        }
+        try{
+          const r=await fetch(API_URL + '/api/tracks');
+          if(r.ok){const items=await r.json();if(items.length){
+              s.tracks=items.map(it=>({id:it.rel,name:it.name.replace(/\.mp3$/i,''),file:null,handle:null,rel:it.rel,url:API_URL+it.rel,duration:0,genre:detectGenre(it.name),lang:detectLang(it.name)}));
+            rebuildGenres();s.loadModal=false;toast('Auto-loaded '+s.tracks.length+' tracks');await readMetaAll(s.tracks);
+            restorePlayState();
+            setInterval(refreshTracks, 30000);
+            console.log('onMounted completed (server)');
+            return;
+          }}
+        }catch(e){}
+        try{await loadDB();await pullFromServer();}catch(e){}
+        if(!('showDirectoryPicker' in window)){s.fallback=true;s.loadModal=true;return;}
+        try{const h=await idbGet('rootHandle');if(h){const p=await h.queryPermission({mode:'readwrite'});if(p==='granted'){s.rootHandle=h;s.loadModal=false;await scan(h);restorePlayState();}else s.loadModal=true;}else s.loadModal=true;}catch(e){s.loadModal=true;}
+        console.log('onMounted completed');
+      }catch(e){console.error('onMounted error:',e);s.loadModal=true;}
+      setInterval(() => { if(s.isPlaying) savePlayState(); }, 15000);
+      window.addEventListener('beforeunload', () => savePlayState());
+      window.addEventListener('keydown', (e) => {
+        if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+        switch(e.key){
+          case ' ': e.preventDefault();togglePlay();break;
+          case 'ArrowRight': e.preventDefault();seek(10);break;
+          case 'ArrowLeft': e.preventDefault();seek(-10);break;
+          case 'ArrowUp': e.preventDefault();s.volume=Math.min(1,+(s.volume+0.05).toFixed(2));applyVolume();break;
+          case 'ArrowDown': e.preventDefault();s.volume=Math.max(0,+(s.volume-0.05).toFixed(2));applyVolume();break;
+          case 'n':case 'N':next();break;
+          case 'p':case 'P':prev();break;
+          case 's':case 'S':s.shuffle=!s.shuffle;break;
+          case 'r':case 'R':cycleRepeat();break;
+          case '/':e.preventDefault();document.querySelector('input[placeholder*="Search"]')?.focus();break;
+          case 'Escape':closeAllModals();break;
+        }
+      });
+    });
+
+    return { s, audio, seeking, filterOpen, sortOpen, dropdownStyle, showCreate, newCustom, newCustom2, addMenu, isMobile, mobileTab, playlistTab, currentPlayStats,
+      expandGenres, sidebarOpen, showSettings, showLogin, loginError,
+      user, userHasAccount,
+      current, genreList, langList, customList, addTargets, visibleTracks, allFav,
+      activeGenre, activeLang, activePlaylist, sortLabel,
+      trackMenu, showQueue,
+      openFolder, loadFilesFallback, playTrack, playList, togglePlay, next, prev,
+      onMeta, onTime, onEnded, onError, onSeekInput, endSeek, applyVolume, toggleFav, favoriteAll, selectList,
+      sortBy, toggleFilter, toggleSort, selectFilter, openAdd, addToPlaylist, createCustom, organizePreview, applyOrganize, fmt, thumbBg, getTrack,
+      pushToServer, pullFromServer, saveUser, loginUser, logoutUser, refreshTracks, cycleRepeat, cycleTheme,
+      tabTracks, tabFav, tabPlaylists, tabSearch, tabNow, pickPlaylist,
+      onTrackPress, onTrackRelease, onTrackMove, onTrackClick, openTrackMenu, closeTrackMenu,
+      addToQueue, removeFromQueue, clearQueue, playFromQueue, moveInQueue, removeFromActiveList,
+      savePlayState, restorePlayState, stopPlayback, seek, closeAllModals };
+  }
+}).mount('#app');
+console.log('App mounted');
+</script>
+<script>setTimeout(function(){
+  var el=document.getElementById('app');
+  if(el&&!el.__vue_app__){el.removeAttribute('v-cloak');document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0b1120;color:#94a3b8;font-family:sans-serif;flex-direction:column;gap:1rem;text-align:center;padding:2rem"><div style="font-size:4rem;opacity:0.4">♪♪</div><div style="font-size:1.2rem;font-weight:600">Something went wrong</div><div style="font-size:0.9rem;opacity:0.7">Try reloading the page</div><button onclick="location.reload()" style="margin-top:0.5rem;padding:0.6rem 2rem;border-radius:9999px;border:none;background:#22d3ee;color:#0b1120;font-weight:600;cursor:pointer;font-size:0.9rem">Reload</button></div>';console.warn('Vue mount fallback: showing error UI');}
+},5000);</script>
+</body>
+</html>

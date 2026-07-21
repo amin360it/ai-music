@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "volume": 0.9,
+    "shuffle": false,
+    "repeat": "off",
+    "sortKey": "duration",
+    "sortDir": 1,
+    "theme": "system",
+    "_id": "settings",
+    "_rev": "6-6311f307de537cc3105b0848ea63d0d6"
+  }
+}
