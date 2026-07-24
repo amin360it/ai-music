@@ -18,26 +18,35 @@
   function safeGet(raw){
     try{ return JSON.parse(raw); }catch(e){ return null; }
   }
+  async function hashPass(pass){
+    try{
+      const enc=new TextEncoder().encode(pass);
+      const buf=await crypto.subtle.digest('SHA-256',enc);
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }catch(e){return pass;}
+  }
 
   window.AppStorage = {
     /* ── Auth ── */
     listUsers(){
       try{ return JSON.parse(localStorage.getItem(PREFIX+':users')||'[]'); }catch(e){ return []; }
     },
-    register(name, email, userId, pass){
+    async register(name, email, userId, pass){
       const users = this.listUsers();
       if(users.some(u=>u.id===userId)) return {ok:false, error:'User ID already exists'};
-      users.push({ id:userId, name:name, email:email, pass:pass, created:Date.now() });
+      const hashed = await hashPass(pass);
+      users.push({ id:userId, name:name, email:email, pass:hashed, created:Date.now() });
       localStorage.setItem(PREFIX+':users', JSON.stringify(users));
       this._login(userId);
       this.migrateGuest();
       return {ok:true};
     },
-    login(userId, pass){
+    async login(userId, pass){
       const users = this.listUsers();
       const u = users.find(x=>x.id===userId);
       if(!u) return {ok:false, error:'Account not found'};
-      if(u.pass !== pass) return {ok:false, error:'Wrong password'};
+      const hashed = await hashPass(pass);
+      if(u.pass !== hashed) return {ok:false, error:'Wrong password'};
       this._login(userId);
       return {ok:true, user:{ name:u.name, email:u.email, id:u.id }};
     },

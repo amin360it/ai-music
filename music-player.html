@@ -281,6 +281,7 @@
           <span class="ml-auto text-xs text-slate-500" v-text="s.tracks.length+' tracks'"></span>
         </button>
       </div>
+      </div>
 
       <!-- Quick controls + Settings -->
       <div class="border-t border-slate-800/50 p-2 space-y-0.5 shrink-0">
@@ -1111,7 +1112,7 @@ createApp({
       else if (s.activeList==='Favorites') ids=s.favorites;
       else ids=(s.genres[s.activeList]||s.custom[s.activeList]||s.langs[s.activeList]||[]);
       let list=ids.map(i=>s.tracks.find(t=>t.id===i)).filter(Boolean);
-      const q=s.search.trim().toLowerCase(); if(q) list=list.filter(t=>t.name.toLowerCase().includes(q));
+      const q=s.search.trim().toLowerCase(); if(q) list=list.filter(t=>t.name.toLowerCase().includes(q)||t.genre.toLowerCase().includes(q)||t.lang.toLowerCase().includes(q));
       if(s.sortKey!=='default'){const d=s.sortDir;list=list.slice().sort((a,b)=>{if(s.sortKey==='name')return d*a.name.toLowerCase().localeCompare(b.name.toLowerCase());if(s.sortKey==='genre')return d*a.genre.toLowerCase().localeCompare(b.genre.toLowerCase());if(s.sortKey==='lang')return d*a.lang.localeCompare(b.lang);if(s.sortKey==='duration')return d*((a.duration||0)-(b.duration||0));return 0;});}
       return list;
     });
@@ -1402,7 +1403,7 @@ createApp({
       if(ids.every(i=>s.favorites.includes(i)))s.favorites=[];else s.favorites=[...new Set([...s.favorites,...ids])];
       saveFavs();
     }
-    function selectList(n){ s.activeList = n; }
+    function selectList(n){ s.activeList = n; savePlayState(); }
     function openAdd(id){addMenu.value=id;newCustom2.value='';}
     function addToPlaylist(name,id){
       if(name==='Favorites'){
@@ -1442,7 +1443,7 @@ createApp({
       playTrack(id);
     }
     function moveInQueue(from,to){
-      if(to<0||to>=s.queue.length)return;
+      if(from<0||from>=s.queue.length||to<0||to>=s.queue.length||from===to)return;
       const[item]=s.queue.splice(from,1);s.queue.splice(to,0,item);saveQueue();
     }
     function removeFromActiveList(id){
@@ -1535,32 +1536,35 @@ createApp({
         console.log('onMounted started');
         applyTheme();
         window.matchMedia('(prefers-color-scheme:light)').addEventListener('change',()=>{if(s.theme==='system')applyTheme();});
+        let tracksLoaded = false;
         if(await tryLoadEmbedded()){
           try{await loadDB();}catch(e){}
           restorePlayState();
           console.log('onMounted completed (embedded)');
-          return;
-        }
-        if(await tryLoadSongsJSON()){
+          tracksLoaded=true;
+        }else if(await tryLoadSongsJSON()){
           try{await loadDB();}catch(e){}
           restorePlayState();
           console.log('onMounted completed (songs.json)');
-          return;
+          tracksLoaded=true;
+        }else{
+          try{
+            const r=await fetch(API_URL + '/api/tracks');
+            if(r.ok){const items=await r.json();if(items.length){
+                s.tracks=items.map(it=>({id:it.rel,name:it.name.replace(/\.mp3$/i,''),file:null,handle:null,rel:it.rel,url:API_URL+it.rel,duration:0,genre:detectGenre(it.name),lang:detectLang(it.name)}));
+              rebuildGenres();s.loadModal=false;toast('Auto-loaded '+s.tracks.length+' tracks');await readMetaAll(s.tracks);
+              restorePlayState();
+              setInterval(refreshTracks, 30000);
+              console.log('onMounted completed (server)');
+              tracksLoaded=true;
+            }}
+          }catch(e){}
         }
-        try{
-          const r=await fetch(API_URL + '/api/tracks');
-          if(r.ok){const items=await r.json();if(items.length){
-              s.tracks=items.map(it=>({id:it.rel,name:it.name.replace(/\.mp3$/i,''),file:null,handle:null,rel:it.rel,url:API_URL+it.rel,duration:0,genre:detectGenre(it.name),lang:detectLang(it.name)}));
-            rebuildGenres();s.loadModal=false;toast('Auto-loaded '+s.tracks.length+' tracks');await readMetaAll(s.tracks);
-            restorePlayState();
-            setInterval(refreshTracks, 30000);
-            console.log('onMounted completed (server)');
-            return;
-          }}
-        }catch(e){}
-        try{await loadDB();await pullFromServer();}catch(e){}
-        if(!('showDirectoryPicker' in window)){s.fallback=true;s.loadModal=true;return;}
-        try{const h=await idbGet('rootHandle');if(h){const p=await h.queryPermission({mode:'readwrite'});if(p==='granted'){s.rootHandle=h;s.loadModal=false;await scan(h);restorePlayState();}else s.loadModal=true;}else s.loadModal=true;}catch(e){s.loadModal=true;}
+        if(!tracksLoaded){
+          try{await loadDB();await pullFromServer();}catch(e){}
+          if(!('showDirectoryPicker' in window)){s.fallback=true;s.loadModal=true;}
+          else{try{const h=await idbGet('rootHandle');if(h){const p=await h.queryPermission({mode:'readwrite'});if(p==='granted'){s.rootHandle=h;s.loadModal=false;await scan(h);restorePlayState();}else s.loadModal=true;}else s.loadModal=true;}catch(e){s.loadModal=true;}}
+        }
         console.log('onMounted completed');
       }catch(e){console.error('onMounted error:',e);s.loadModal=true;}
       setInterval(() => { if(s.isPlaying) savePlayState(); }, 15000);
